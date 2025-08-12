@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'models/catalog_models.dart';
-import 'widgets/product_card.dart';
-import 'widgets/category_card.dart';
+import '../models/catalog_models.dart';
+import '../widgets/product_card.dart';
+import '../widgets/category_card.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class ShopPage extends StatelessWidget {
+  const ShopPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +97,15 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 12),
       child: Row(
         children: [
-          Text(title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+          ),
           const Spacer(),
           TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF53B175)
-              ),
-              child: const Text('See all')
+            onPressed: () {},
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF53B175)),
+            child: const Text('See all'),
           ),
         ],
       ),
