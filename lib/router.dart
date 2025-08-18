@@ -10,6 +10,8 @@ import 'pages/favourites_page.dart';
 import 'pages/account_page.dart';
 import 'pages/login.dart';
 import 'pages/signup.dart';
+import 'catalog_data.dart';
+import 'pages/product_detail_page.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -60,6 +62,23 @@ final router = GoRouter(
                 path: 'search',
                 name: 'productsSearch',
                 builder: (_, __) => const ProductsPage(showSearch: true),
+              ),
+              GoRoute(
+                path: '/product/:id',
+                name: 'product',
+                builder: (_, state) {
+                  final id = state.pathParameters['id']!;
+                  return FutureBuilder(
+                    future: CatalogData.ensureLoaded(),
+                    builder: (context, snap) {
+                      if (snap.connectionState != ConnectionState.done) {
+                        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+                      }
+                      final product = CatalogData.getById(id);
+                      return ProductDetailPage(product: product);
+                    },
+                  );
+                },
               ),
             ],
           ),

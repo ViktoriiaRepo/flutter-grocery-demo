@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../catalog_data.dart';
 import '../models/catalog_models.dart';
 import '../widgets/product_card.dart';
 import '../widgets/category_card.dart';
@@ -16,125 +17,102 @@ class ProductSection {
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
 
+  static const _palette = <Color>[
+    Color(0xFFFFF1E6),
+    Color(0xFFE9F7F1),
+    Color(0xFFF4EBF7),
+    Color(0xFFFFF4E5),
+    Color(0xFFEFF6FF),
+    Color(0xFFF3F4F6),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final exclusive = <ProductItem>[
-      ProductItem(
-        title: 'Organic Bananas',
-        subtitle: '7pcs, Price',
-        imageUrl: 'https://i.postimg.cc/3xg7W7z8/92f1ea7dcce3b5d06cd1b1418f9b9413-3.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Bananas'),
-      ),
-      ProductItem(
-        title: 'Red Apple',
-        subtitle: '1kg, Price',
-        imageUrl: 'https://i.postimg.cc/sgFsV16H/pngfuel-2.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Apple'),
-      ),
-      ProductItem(
-        title: 'Red Apple',
-        subtitle: '1kg, Price',
-        imageUrl: 'https://i.postimg.cc/sgFsV16H/pngfuel-2.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Apple'),
-      ),
-    ];
+    return FutureBuilder<void>(
+      future: CatalogData.ensureLoaded(),
+      builder: (context, snap) {
+        if (snap.connectionState != ConnectionState.done) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+        if (snap.hasError) {
+          return Scaffold(body: Center(child: Text('Error: ${snap.error}')));
+        }
 
-    final bestSelling = <ProductItem>[
-      ProductItem(
-        title: 'Bell Pepper Red',
-        subtitle: '1kg, Price',
-        imageUrl: 'https://i.postimg.cc/GpmcfVSb/92f1ea7dcce3b5d06cd1b1418f9b9413-3-1.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Pepper'),
-      ),
-      ProductItem(
-        title: 'Ginger',
-        subtitle: '250gm, Price',
-        imageUrl: 'https://i.postimg.cc/jd9dgMKJ/pngfuel-3.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Pepper'),
-      ),
-      ProductItem(
-        title: 'Ginger',
-        subtitle: '250gm, Price',
-        imageUrl: 'https://i.postimg.cc/jd9dgMKJ/pngfuel-3.png',
-        category: 'fruits',
-        price: 4.99,
-        onAdd: () => debugPrint('Add Pepper'),
-      )
-    ];
+        final sections = <ProductSection>[
+          ProductSection('exclusive', 'Exclusive Offer',
+              CatalogData.exclusive /*.take(6)*/ .toList()),
+          ProductSection('best', 'Best Selling',
+              CatalogData.bestSelling /*.take(6)*/ .toList()),
+        ];
 
-    final sections = <ProductSection>[
 
-      ProductSection('exclusive', 'Exclusive Offer', exclusive),
-      ProductSection('best', 'Best Selling', bestSelling),
-    ];
+        final cats = CatalogData.categories;
 
-    final categories = <CategoryItem>[
-      CategoryItem(
-        title: 'Pulses',
-        imageUrl: 'https://i.postimg.cc/fbp6vrG2/4215936-pulses-png-8-png-image-pulses-png-409-409-1.png',
-        background: const Color(0xFFFFF1E6),
-        onTap: () => debugPrint('Open Pulses'),
-      ),
-      CategoryItem(
-        title: 'Rice',
-        imageUrl: 'https://i.postimg.cc/HLVqXgh8/8-82858-download-sack-of-rice-png-1.png',
-        background: const Color(0xFFE9F7F1),
-        onTap: () => debugPrint('Open Rice'),
-      ),
-    ];
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Groceries'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: _SearchInput(),
+                ),
+                const SizedBox(height: 20),
+                HomeBanner(),
+                const SizedBox(height: 30),
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Groceries'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: _SearchInput(),
+                for (final s in sections) ...[
+                  _ProductsSection(
+                    title: s.title,
+                    items: s.items,
+                    sectionKey: s.key,
+                  ),
+                  const SizedBox(height: 12),
+                ],
+
+                _SectionHeader(
+                  title: 'Categories',
+                  onSeeAll: () => context.goNamed('explore'),
+                ),
+
+                SizedBox(
+                  height: 120,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: cats.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 16),
+                    itemBuilder: (_, i) {
+                      final c = cats[i];
+
+                      final item = CategoryItem(
+                        title: c.title,
+                        imageUrl: c.imageUrl,
+                        background: _palette[i % _palette.length],
+                        onTap: () => context.goNamed(
+                          'categoryProducts',
+                          pathParameters: {'id': c.id},
+                        ),
+                      );
+                      return SizedBox(
+                        width: 170,
+                        child: CategoryCard(category: item),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
             ),
-            SizedBox(height: 20),
-            HomeBanner(),
-            SizedBox(height: 30),
-            for (final s in sections) ...[
-              _ProductsSection(title: s.title, items: s.items,sectionKey: s.key ),
-              const SizedBox(height: 12),
-            ],
-
-            _SectionHeader(
-              title: 'Categories',
-              onSeeAll: () => context.goNamed('explore'),
-            ),
-
-            SizedBox(
-              height: 120,
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 16),
-                itemBuilder: (_, i) => CategoryCard(category: categories[i]),
-              ),
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -143,6 +121,7 @@ class _ProductsSection extends StatelessWidget {
   final String title;
   final String sectionKey;
   final List<ProductItem> items;
+
   const _ProductsSection({
     required this.title,
     required this.items,
@@ -168,10 +147,17 @@ class _ProductsSection extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: items.length,
             separatorBuilder: (_, __) => const SizedBox(width: 16),
-            itemBuilder: (_, i) => SizedBox(
-              width: 170,
-              child: ProductCard(product: items[i]),
-            ),
+            itemBuilder: (_, i) {
+              final p = items[i];
+              return SizedBox(
+                width: 170,
+                child: InkWell(
+                  onTap: () =>
+                      context.goNamed('product', pathParameters: {'id': p.id}),
+                  child: ProductCard(product: p),
+                ),
+              );
+            },
           ),
         ),
       ],
@@ -192,7 +178,10 @@ class _SectionHeader extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.w800),
           ),
           const Spacer(),
           TextButton(
@@ -205,7 +194,6 @@ class _SectionHeader extends StatelessWidget {
     );
   }
 }
-
 
 class _SearchInput extends StatelessWidget {
   const _SearchInput({super.key});
@@ -230,4 +218,3 @@ class _SearchInput extends StatelessWidget {
     );
   }
 }
-

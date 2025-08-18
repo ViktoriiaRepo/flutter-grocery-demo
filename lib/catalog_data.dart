@@ -42,16 +42,27 @@ class CatalogData {
     // products
     allProducts = ((map['products'] as List?) ?? const []).map((e) {
       final m = e as Map<String, dynamic>;
+
+      final nutritionsRaw = (m['nutritions'] as Map?) ?? const {};
+      final nutritions = nutritionsRaw.map(
+            (k, v) => MapEntry(k.toString(), v.toString()),
+      );
+
       return ProductItem(
-        title: m['title'] as String,
+        id: (m['id'] ?? '') as String,
+        title: (m['title'] ?? '') as String,
         subtitle: (m['subtitle'] ?? '') as String,
         imageUrl: (m['imageUrl'] ?? '') as String,
         price: (m['price'] as num).toDouble(),
-        category: m['category'] as String,
+        category: (m['category'] ?? '') as String,
         section: m['section'] as String?,
+        description: m['description'] as String?,
+        nutritions: nutritions,
         onAdd: () => debugPrint('Add ${m['title']}'),
       );
     }).toList();
+
+
 
     final hasSection = allProducts.any((p) => (p.section ?? '').isNotEmpty);
     if (hasSection) {
@@ -64,6 +75,8 @@ class CatalogData {
 
     _loaded = true;
   }
+  static ProductItem getById(String id) =>
+      allProducts.firstWhere((p) => p.id == id);
 
   static Future<void> ensureLoaded() => load();
 

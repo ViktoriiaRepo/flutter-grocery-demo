@@ -38,7 +38,9 @@
       "subtitle": "355ml, Price",
       "imageUrl": "https://i.postimg.cc/9f22KSkz/pngfuel-11.png",
       "price": 1.99,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Classic diet cola with zero sugar and a crisp taste.",
+      "nutritions": { "Energy": "1 kcal / 100 ml", "Carbs": "0 g", "Sugar": "0 g", "Protein": "0 g", "Fat": "0 g", "Sodium": "15 mg" }
     },
     {
       "id": "bev_sprite_can_325",
@@ -46,7 +48,9 @@
       "subtitle": "325ml, Price",
       "imageUrl": "https://i.postimg.cc/K8BF9FJd/pngfuel-12.png",
       "price": 1.50,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Lemon-lime soda, refreshing and sparkling.",
+      "nutritions": { "Energy": "42 kcal / 100 ml", "Carbs": "10.6 g", "Sugar": "10.6 g", "Protein": "0 g", "Fat": "0 g", "Sodium": "35 mg" }
     },
     {
       "id": "bev_apple_grape_2l",
@@ -54,7 +58,9 @@
       "subtitle": "2L, Price",
       "imageUrl": "https://i.postimg.cc/15DvZzZG/tree-top-juice-apple-grape-64oz-1-2.png",
       "price": 15.99,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Blend of apple and grape juices made from concentrate.",
+      "nutritions": { "Energy": "46 kcal / 100 ml", "Carbs": "11 g", "Sugar": "10 g", "Protein": "0 g", "Fat": "0 g" }
     },
     {
       "id": "bev_orange_2l",
@@ -62,7 +68,9 @@
       "subtitle": "2L, Price",
       "imageUrl": "https://i.postimg.cc/ZYsTnwWD/tree-top-juice-apple-grape-64oz-1-1.png",
       "price": 15.99,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Rich orange juice with natural citrus flavor.",
+      "nutritions": { "Energy": "45 kcal / 100 ml", "Carbs": "10.4 g", "Sugar": "8.4 g", "Protein": "0.7 g", "Fat": "0.2 g" }
     },
     {
       "id": "bev_coke_can_325",
@@ -70,7 +78,9 @@
       "subtitle": "325ml, Price",
       "imageUrl": "https://i.postimg.cc/NFnYn0hw/pngfuel-13.png",
       "price": 4.99,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Original taste cola, crisp and bubbly.",
+      "nutritions": { "Energy": "42 kcal / 100 ml", "Carbs": "10.6 g", "Sugar": "10.6 g", "Protein": "0 g", "Fat": "0 g", "Sodium": "11 mg" }
     },
     {
       "id": "bev_pepsi_can_330",
@@ -78,7 +88,9 @@
       "subtitle": "330ml, Price",
       "imageUrl": "https://i.postimg.cc/vTTbXVNz/pngfuel-14.png",
       "price": 4.99,
-      "category": "beverages"
+      "category": "beverages",
+      "description": "Bold cola flavor with a smooth finish.",
+      "nutritions": { "Energy": "42 kcal / 100 ml", "Carbs": "10.6 g", "Sugar": "10.6 g", "Protein": "0 g", "Fat": "0 g", "Sodium": "11 mg" }
     },
     {
       "id": "dairy_egg_chicken_red_4pc",
@@ -86,7 +98,9 @@
       "subtitle": "4pcs, Price",
       "imageUrl": "https://i.postimg.cc/m2cTH7MZ/pngfuel-16.png",
       "price": 1.99,
-      "category": "dairy"
+      "category": "dairy",
+      "description": "Fresh chicken eggs with rich, golden yolks.",
+      "nutritions": { "Energy": "155 kcal / 100 g", "Carbs": "1.1 g", "Sugar": "1.1 g", "Protein": "13 g", "Fat": "11 g" }
     },
     {
       "id": "dairy_egg_chicken_white_180g",
@@ -94,7 +108,9 @@
       "subtitle": "180g, Price",
       "imageUrl": "https://i.postimg.cc/63YBd0Yq/pngfuel-18.png",
       "price": 1.50,
-      "category": "dairy"
+      "category": "dairy",
+      "description": "Clean, white-shelled chicken eggs for everyday use.",
+      "nutritions": { "Energy": "155 kcal / 100 g", "Carbs": "1.1 g", "Sugar": "1.1 g", "Protein": "13 g", "Fat": "11 g" }
     },
     {
       "id": "dairy_mayo_eggless_500g",
@@ -102,7 +118,9 @@
       "subtitle": "500g, Price",
       "imageUrl": "https://i.postimg.cc/Z5dY16Ks/American-Garden-Mayonnaise-Eggless-473ml-2.png",
       "price": 4.49,
-      "category": "dairy"
+      "category": "dairy",
+      "description": "Creamy egg-free mayonnaise, perfect for salads and sandwiches.",
+      "nutritions": { "Energy": "680 kcal / 100 g", "Carbs": "1 g", "Sugar": "1 g", "Protein": "1 g", "Fat": "75 g" }
     },
     {
       "id": "dairy_milk_1l",
@@ -110,7 +128,9 @@
       "subtitle": "1L, Price",
       "imageUrl": "https://i.postimg.cc/G2x7SgyP/images.jpg",
       "price": 1.20,
-      "category": "dairy"
+      "category": "dairy",
+      "description": "Pasteurized whole milk, rich and smooth.",
+      "nutritions": { "Energy": "64 kcal / 100 ml", "Carbs": "4.8 g", "Sugar": "4.8 g", "Protein": "3.3 g", "Fat": "3.6 g" }
     },
     {
       "id": "dairy_cheddar_250g",
@@ -118,7 +138,9 @@
       "subtitle": "250g, Price",
       "imageUrl": "https://i.postimg.cc/X7pLwYQk/images-1.jpg",
       "price": 5.99,
-      "category": "dairy"
+      "category": "dairy",
+      "description": "Aged cheddar cheese with a sharp, savory taste.",
+      "nutritions": { "Energy": "402 kcal / 100 g", "Carbs": "1.3 g", "Sugar": "0.5 g", "Protein": "25 g", "Fat": "33 g" }
     },
     {
       "id": "fru_banana_7pcs",
@@ -127,7 +149,9 @@
       "imageUrl": "https://i.postimg.cc/3xg7W7z8/92f1ea7dcce3b5d06cd1b1418f9b9413-3.png",
       "price": 4.99,
       "category": "fruits",
-      "section": "exclusive"
+      "section": "exclusive",
+      "description": "Sweet organic bananas, perfect for snacks and smoothies.",
+      "nutritions": { "Energy": "89 kcal / 100 g", "Carbs": "23 g", "Sugar": "12 g", "Protein": "1.1 g", "Fat": "0.3 g", "Fiber": "2.6 g" }
     },
     {
       "id": "fru_apple_1kg",
@@ -136,7 +160,9 @@
       "imageUrl": "https://i.postimg.cc/sgFsV16H/pngfuel-2.png",
       "price": 4.99,
       "category": "fruits",
-      "section": "exclusive"
+      "section": "exclusive",
+      "description": "Crisp red apples with a naturally sweet flavor.",
+      "nutritions": { "Energy": "52 kcal / 100 g", "Carbs": "14 g", "Sugar": "10 g", "Protein": "0.3 g", "Fat": "0.2 g", "Fiber": "2.4 g" }
     },
     {
       "id": "veg_bellpepper_red_1kg",
@@ -145,7 +171,9 @@
       "imageUrl": "https://i.postimg.cc/GpmcfVSb/92f1ea7dcce3b5d06cd1b1418f9b9413-3-1.png",
       "price": 4.99,
       "category": "fruits",
-      "section": "best"
+      "section": "best",
+      "description": "Fresh red bell peppers, crunchy and vibrant.",
+      "nutritions": { "Energy": "31 kcal / 100 g", "Carbs": "6 g", "Sugar": "4 g", "Protein": "1 g", "Fat": "0.3 g", "Fiber": "2.1 g" }
     },
     {
       "id": "veg_ginger_250g",
@@ -154,7 +182,9 @@
       "imageUrl": "https://i.postimg.cc/jd9dgMKJ/pngfuel-3.png",
       "price": 4.99,
       "category": "fruits",
-      "section": "best"
+      "section": "best",
+      "description": "Aromatic ginger root for cooking and tea.",
+      "nutritions": { "Energy": "80 kcal / 100 g", "Carbs": "18 g", "Sugar": "1.7 g", "Protein": "1.8 g", "Fat": "0.8 g", "Fiber": "2 g" }
     },
     {
       "id": "oil_sunflower_1l",
@@ -163,7 +193,9 @@
       "imageUrl": "https://i.postimg.cc/QdqqDKts/1.jpg",
       "price": 9.99,
       "category": "oil",
-      "section": "exclusive"
+      "section": "exclusive",
+      "description": "Light cooking oil with a neutral taste.",
+      "nutritions": { "Energy": "884 kcal / 100 ml", "Carbs": "0 g", "Sugar": "0 g", "Protein": "0 g", "Fat": "100 g" }
     },
     {
       "id": "oil_olive_extra_500ml",
@@ -171,7 +203,9 @@
       "subtitle": "500ml, Price",
       "imageUrl": "https://i.postimg.cc/NFhXmQMp/2.jpg",
       "price": 12.49,
-      "category": "oil"
+      "category": "oil",
+      "description": "Cold-pressed extra virgin olive oil with rich aroma.",
+      "nutritions": { "Energy": "884 kcal / 100 ml", "Carbs": "0 g", "Sugar": "0 g", "Protein": "0 g", "Fat": "100 g" }
     },
     {
       "id": "oil_ghee_1kg",
@@ -180,7 +214,9 @@
       "imageUrl": "https://i.postimg.cc/xT3mNDS3/images-2.jpg",
       "price": 14.99,
       "category": "oil",
-      "section": "best"
+      "section": "best",
+      "description": "Clarified butter with a rich, nutty flavor.",
+      "nutritions": { "Energy": "876 kcal / 100 g", "Carbs": "0 g", "Sugar": "0 g", "Protein": "0.3 g", "Fat": "99 g" }
     },
     {
       "id": "meat_salmon_1kg",
@@ -188,7 +224,9 @@
       "subtitle": "1kg, Price",
       "imageUrl": "https://i.postimg.cc/Zq2vzJr4/images-3.jpg",
       "price": 19.99,
-      "category": "meat"
+      "category": "meat",
+      "description": "Premium salmon fillet, ideal for grilling or baking.",
+      "nutritions": { "Energy": "208 kcal / 100 g", "Carbs": "0 g", "Sugar": "0 g", "Protein": "20 g", "Fat": "13 g", "Omega-3": "2.6 g" }
     },
     {
       "id": "meat_chicken_breast_1kg",
@@ -197,7 +235,9 @@
       "imageUrl": "https://i.postimg.cc/9FCRh8qR/3.jpg",
       "price": 8.99,
       "category": "meat",
-      "section": "best"
+      "section": "best",
+      "description": "Lean chicken breast, skinless and boneless.",
+      "nutritions": { "Energy": "165 kcal / 100 g", "Carbs": "0 g", "Sugar": "0 g", "Protein": "31 g", "Fat": "3.6 g" }
     },
     {
       "id": "meat_beef_steak_500g",
@@ -205,7 +245,9 @@
       "subtitle": "500g, Price",
       "imageUrl": "https://i.postimg.cc/Kz7Gpbf9/images-4.jpg",
       "price": 12.99,
-      "category": "meat"
+      "category": "meat",
+      "description": "Tender beef steak for pan-searing or grilling.",
+      "nutritions": { "Energy": "271 kcal / 100 g", "Carbs": "0 g", "Sugar": "0 g", "Protein": "25 g", "Fat": "19 g" }
     },
     {
       "id": "bak_egg_pasta_30g",
@@ -213,7 +255,9 @@
       "subtitle": "30gm, Price",
       "imageUrl": "https://i.postimg.cc/LXHHY7kG/Group-6848.png",
       "price": 15.99,
-      "category": "bakery"
+      "category": "bakery",
+      "description": "Traditional egg pasta, perfect with rich sauces.",
+      "nutritions": { "Energy": "371 kcal / 100 g", "Carbs": "74 g", "Sugar": "3 g", "Protein": "13 g", "Fat": "4 g" }
     },
     {
       "id": "bak_egg_noodles_200g",
@@ -221,7 +265,9 @@
       "subtitle": "200g, Price",
       "imageUrl": "https://i.postimg.cc/g0yz0dhv/egg-noodle-1-2.png",
       "price": 15.99,
-      "category": "bakery"
+      "category": "bakery",
+      "description": "Springy egg noodles for soups and stir-fries.",
+      "nutritions": { "Energy": "384 kcal / 100 g", "Carbs": "72 g", "Sugar": "3 g", "Protein": "14 g", "Fat": "6 g" }
     },
     {
       "id": "bak_cookies_300g",
@@ -229,7 +275,9 @@
       "subtitle": "300g, Price",
       "imageUrl": "https://i.postimg.cc/KYPhxNTj/4.jpg",
       "price": 3.49,
-      "category": "bakery"
+      "category": "bakery",
+      "description": "Crunchy cookies with generous chocolate chips.",
+      "nutritions": { "Energy": "500 kcal / 100 g", "Carbs": "67 g", "Sugar": "30 g", "Protein": "6 g", "Fat": "24 g" }
     },
     {
       "id": "bak_bread_500g",
@@ -237,7 +285,9 @@
       "subtitle": "500g, Price",
       "imageUrl": "https://i.postimg.cc/nz35hwhF/5.jpg",
       "price": 2.29,
-      "category": "bakery"
+      "category": "bakery",
+      "description": "Soft white bread loaf, perfect for toast and sandwiches.",
+      "nutritions": { "Energy": "265 kcal / 100 g", "Carbs": "49 g", "Sugar": "5 g", "Protein": "9 g", "Fat": "3.2 g", "Fiber": "2.7 g" }
     }
   ]
 }

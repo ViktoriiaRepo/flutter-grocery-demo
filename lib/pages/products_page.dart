@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
 import '../models/catalog_models.dart';
 import '../catalog_data.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({
@@ -56,8 +57,13 @@ class ProductsPage extends StatelessWidget {
               mainAxisExtent: 240,
             ),
             itemCount: items.length,
-            itemBuilder: (_, i) => SizedBox.expand( child: ProductCard(product: items[i]),
-          ),
+            itemBuilder: (_, i) {
+              final p = items[i];
+              return InkWell(
+                onTap: () => context.goNamed('product', pathParameters: {'id': p.id}),
+                child: ProductCard(product: p),
+              );
+            },
           ),
         );
         },
