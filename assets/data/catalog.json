@@ -1,0 +1,243 @@
+{
+  "categories": [
+    {
+      "id": "fruits",
+      "title": "Frash Fruits & Vegetable",
+      "imageUrl": "https://i.postimg.cc/2jtDr3ts/pngfuel-6.png"
+    },
+    {
+      "id": "oil",
+      "title": "Cooking Oil & Ghee",
+      "imageUrl": "https://i.postimg.cc/RVc4d4P2/Group-6835.png"
+    },
+    {
+      "id": "meat",
+      "title": "Meat & Fish",
+      "imageUrl": "https://i.postimg.cc/KvyyRCZf/pngfuel-9-1.png"
+    },
+    {
+      "id": "bakery",
+      "title": "Bakery & Snacks",
+      "imageUrl": "https://i.postimg.cc/Bbjf2Gj7/pngfuel-6-1.png"
+    },
+    {
+      "id": "dairy",
+      "title": "Dairy & Eggs",
+      "imageUrl": "https://i.postimg.cc/k4XmXSqm/Group-6837.png"
+    },
+    {
+      "id": "beverages",
+      "title": "Beverages",
+      "imageUrl": "https://i.postimg.cc/vmvyshRh/pngfuel-6-2.png"
+    }
+  ],
+  "products": [
+    {
+      "id": "bev_diet_coke_355",
+      "title": "Diet Coke",
+      "subtitle": "355ml, Price",
+      "imageUrl": "https://i.postimg.cc/9f22KSkz/pngfuel-11.png",
+      "price": 1.99,
+      "category": "beverages"
+    },
+    {
+      "id": "bev_sprite_can_325",
+      "title": "Sprite Can",
+      "subtitle": "325ml, Price",
+      "imageUrl": "https://i.postimg.cc/K8BF9FJd/pngfuel-12.png",
+      "price": 1.50,
+      "category": "beverages"
+    },
+    {
+      "id": "bev_apple_grape_2l",
+      "title": "Apple & Grape Juice",
+      "subtitle": "2L, Price",
+      "imageUrl": "https://i.postimg.cc/15DvZzZG/tree-top-juice-apple-grape-64oz-1-2.png",
+      "price": 15.99,
+      "category": "beverages"
+    },
+    {
+      "id": "bev_orange_2l",
+      "title": "Orange Juice",
+      "subtitle": "2L, Price",
+      "imageUrl": "https://i.postimg.cc/ZYsTnwWD/tree-top-juice-apple-grape-64oz-1-1.png",
+      "price": 15.99,
+      "category": "beverages"
+    },
+    {
+      "id": "bev_coke_can_325",
+      "title": "Coca Cola Can",
+      "subtitle": "325ml, Price",
+      "imageUrl": "https://i.postimg.cc/NFnYn0hw/pngfuel-13.png",
+      "price": 4.99,
+      "category": "beverages"
+    },
+    {
+      "id": "bev_pepsi_can_330",
+      "title": "Pepsi Can",
+      "subtitle": "330ml, Price",
+      "imageUrl": "https://i.postimg.cc/vTTbXVNz/pngfuel-14.png",
+      "price": 4.99,
+      "category": "beverages"
+    },
+    {
+      "id": "dairy_egg_chicken_red_4pc",
+      "title": "Egg Chicken Red",
+      "subtitle": "4pcs, Price",
+      "imageUrl": "https://i.postimg.cc/m2cTH7MZ/pngfuel-16.png",
+      "price": 1.99,
+      "category": "dairy"
+    },
+    {
+      "id": "dairy_egg_chicken_white_180g",
+      "title": "Egg Chicken White",
+      "subtitle": "180g, Price",
+      "imageUrl": "https://i.postimg.cc/63YBd0Yq/pngfuel-18.png",
+      "price": 1.50,
+      "category": "dairy"
+    },
+    {
+      "id": "dairy_mayo_eggless_500g",
+      "title": "Mayonnaise Eggless",
+      "subtitle": "500g, Price",
+      "imageUrl": "https://i.postimg.cc/Z5dY16Ks/American-Garden-Mayonnaise-Eggless-473ml-2.png",
+      "price": 4.49,
+      "category": "dairy"
+    },
+    {
+      "id": "dairy_milk_1l",
+      "title": "Milk",
+      "subtitle": "1L, Price",
+      "imageUrl": "https://i.postimg.cc/G2x7SgyP/images.jpg",
+      "price": 1.20,
+      "category": "dairy"
+    },
+    {
+      "id": "dairy_cheddar_250g",
+      "title": "Cheddar Cheese",
+      "subtitle": "250g, Price",
+      "imageUrl": "https://i.postimg.cc/X7pLwYQk/images-1.jpg",
+      "price": 5.99,
+      "category": "dairy"
+    },
+    {
+      "id": "fru_banana_7pcs",
+      "title": "Organic Bananas",
+      "subtitle": "7pcs, Price",
+      "imageUrl": "https://i.postimg.cc/3xg7W7z8/92f1ea7dcce3b5d06cd1b1418f9b9413-3.png",
+      "price": 4.99,
+      "category": "fruits",
+      "section": "exclusive"
+    },
+    {
+      "id": "fru_apple_1kg",
+      "title": "Red Apple",
+      "subtitle": "1kg, Price",
+      "imageUrl": "https://i.postimg.cc/sgFsV16H/pngfuel-2.png",
+      "price": 4.99,
+      "category": "fruits",
+      "section": "exclusive"
+    },
+    {
+      "id": "veg_bellpepper_red_1kg",
+      "title": "Bell Pepper Red",
+      "subtitle": "1kg, Price",
+      "imageUrl": "https://i.postimg.cc/GpmcfVSb/92f1ea7dcce3b5d06cd1b1418f9b9413-3-1.png",
+      "price": 4.99,
+      "category": "fruits",
+      "section": "best"
+    },
+    {
+      "id": "veg_ginger_250g",
+      "title": "Ginger",
+      "subtitle": "250gm, Price",
+      "imageUrl": "https://i.postimg.cc/jd9dgMKJ/pngfuel-3.png",
+      "price": 4.99,
+      "category": "fruits",
+      "section": "best"
+    },
+    {
+      "id": "oil_sunflower_1l",
+      "title": "Sunflower Oil",
+      "subtitle": "1L, Price",
+      "imageUrl": "https://i.postimg.cc/QdqqDKts/1.jpg",
+      "price": 9.99,
+      "category": "oil",
+      "section": "exclusive"
+    },
+    {
+      "id": "oil_olive_extra_500ml",
+      "title": "Olive Oil (Extra Virgin)",
+      "subtitle": "500ml, Price",
+      "imageUrl": "https://i.postimg.cc/NFhXmQMp/2.jpg",
+      "price": 12.49,
+      "category": "oil"
+    },
+    {
+      "id": "oil_ghee_1kg",
+      "title": "Ghee",
+      "subtitle": "1kg, Price",
+      "imageUrl": "https://i.postimg.cc/xT3mNDS3/images-2.jpg",
+      "price": 14.99,
+      "category": "oil",
+      "section": "best"
+    },
+    {
+      "id": "meat_salmon_1kg",
+      "title": "Fresh Salmon",
+      "subtitle": "1kg, Price",
+      "imageUrl": "https://i.postimg.cc/Zq2vzJr4/images-3.jpg",
+      "price": 19.99,
+      "category": "meat"
+    },
+    {
+      "id": "meat_chicken_breast_1kg",
+      "title": "Chicken Breast",
+      "subtitle": "1kg, Price",
+      "imageUrl": "https://i.postimg.cc/9FCRh8qR/3.jpg",
+      "price": 8.99,
+      "category": "meat",
+      "section": "best"
+    },
+    {
+      "id": "meat_beef_steak_500g",
+      "title": "Beef Steak",
+      "subtitle": "500g, Price",
+      "imageUrl": "https://i.postimg.cc/Kz7Gpbf9/images-4.jpg",
+      "price": 12.99,
+      "category": "meat"
+    },
+    {
+      "id": "bak_egg_pasta_30g",
+      "title": "Egg Pasta",
+      "subtitle": "30gm, Price",
+      "imageUrl": "https://i.postimg.cc/LXHHY7kG/Group-6848.png",
+      "price": 15.99,
+      "category": "bakery"
+    },
+    {
+      "id": "bak_egg_noodles_200g",
+      "title": "Egg Noodles",
+      "subtitle": "200g, Price",
+      "imageUrl": "https://i.postimg.cc/g0yz0dhv/egg-noodle-1-2.png",
+      "price": 15.99,
+      "category": "bakery"
+    },
+    {
+      "id": "bak_cookies_300g",
+      "title": "Chocolate Cookies",
+      "subtitle": "300g, Price",
+      "imageUrl": "https://i.postimg.cc/KYPhxNTj/4.jpg",
+      "price": 3.49,
+      "category": "bakery"
+    },
+    {
+      "id": "bak_bread_500g",
+      "title": "Bread Loaf",
+      "subtitle": "500g, Price",
+      "imageUrl": "https://i.postimg.cc/nz35hwhF/5.jpg",
+      "price": 2.29,
+      "category": "bakery"
+    }
+  ]
+}

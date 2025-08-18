@@ -1,0 +1,50 @@
+{
+  "sections": [
+    {
+      "title": "Exclusive Offer",
+      "items": [
+        {
+          "title": "Organic Bananas",
+          "subtitle": "7pcs, Price",
+          "imageUrl": "https://i.postimg.cc/3xg7W7z8/92f1ea7dcce3b5d06cd1b1418f9b9413-3.png",
+          "price": 4.99
+        },
+        {
+          "title": "Red Apple",
+          "subtitle": "1kg, Price",
+          "imageUrl": "https://i.postimg.cc/sgFsV16H/pngfuel-2.png",
+          "price": 4.99
+        }
+      ]
+    },
+    {
+      "title": "Best Selling",
+      "items": [
+        {
+          "title": "Bell Pepper Red",
+          "subtitle": "1kg, Price",
+          "imageUrl": "https://i.postimg.cc/GpmcfVSb/92f1ea7dcce3b5d06cd1b1418f9b9413-3-1.png",
+          "price": 4.99
+        },
+        {
+          "title": "Ginger",
+          "subtitle": "250gm, Price",
+          "imageUrl": "https://i.postimg.cc/jd9dgMKJ/pngfuel-3.png",
+          "price": 4.99
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "title": "Pulses",
+      "imageUrl": "https://i.postimg.cc/fbp6vrG2/4215936-pulses-png-8-png-image-pulses-png-409-409-1.png",
+      "background": "#FFF1E6"
+    },
+    {
+      "title": "Rice",
+      "imageUrl": "https://i.postimg.cc/HLVqXgh8/8-82858-download-sack-of-rice-png-1.png",
+      "background": "#E9F7F1"
+    }
+  ]
+}

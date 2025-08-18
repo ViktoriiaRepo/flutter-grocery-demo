@@ -1,3 +1,4 @@
+import 'package:first_app/pages/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,10 +8,24 @@ import 'pages/categories_page.dart';
 import 'pages/cart_page.dart';
 import 'pages/favourites_page.dart';
 import 'pages/account_page.dart';
+import 'pages/login.dart';
+import 'pages/signup.dart';
 
 final router = GoRouter(
   initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (_, __) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/signup',
+      name: 'signup',
+      builder: (_, __) => const SignUpPage(),
+    ),
+
+
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           _HomeShell(navigationShell: navigationShell),
@@ -19,7 +34,35 @@ final router = GoRouter(
           GoRoute(path: '/', name: 'shop', builder: (_, __) => const ShopPage()),
         ]),
         StatefulShellBranch(routes: [
-          GoRoute(path: '/explore', name: 'explore', builder: (_, __) => const CategoriesPage()),
+          GoRoute(
+              path: '/explore',
+              name: 'explore',
+              builder: (_, __) => const CategoriesPage(showSearch: true),
+            routes: [
+              GoRoute(
+                path: 'category/:id',
+                name: 'categoryProducts',
+                builder: (_, state) => ProductsPage(categoryId: state.pathParameters['id']!),
+              ),
+              GoRoute(
+                path: 'products',
+                name: 'products',
+                builder: (_, __) => const ProductsPage(),
+              ),
+
+              GoRoute(
+                path: 'section/:kind',
+                name: 'sectionProducts',
+                builder: (_, state) =>
+                    ProductsPage(section: state.pathParameters['kind']!),
+              ),
+              GoRoute(
+                path: 'search',
+                name: 'productsSearch',
+                builder: (_, __) => const ProductsPage(showSearch: true),
+              ),
+            ],
+          ),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(path: '/cart', name: 'cart', builder: (_, __) => const CartPage()),
