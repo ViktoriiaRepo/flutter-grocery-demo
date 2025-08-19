@@ -1,0 +1,101 @@
+{
+  "status": true,
+  "message": "",
+  "data": {
+    "slider": [
+      "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/banner.jpg",
+      "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/banner.jpg",
+      "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/banner.jpg"
+    ],
+    "exclusive": [
+      {
+        "id": 56,
+        "name": "Beef Bone",
+        "short_description": "1kg, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-4-300x187.png",
+        "price": "30.99"
+      },
+      {
+        "id": 51,
+        "name": "Red Apple",
+        "short_description": "1kg, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/Vector-1-300x182.png",
+        "price": "2.2"
+      },
+      {
+        "id": 49,
+        "name": "Organic Bananas",
+        "short_description": "7pcs, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/92f1ea7dcce3b5d06cd1b1418f9b9413-3-300x239.png",
+        "price": "12"
+      }
+    ],
+    "best": [
+      {
+        "id": 64,
+        "name": "Egg Noodles",
+        "short_description": "30gm, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/egg-noodle-1-2-197x300.png",
+        "price": "2.2"
+      },
+      {
+        "id": 54,
+        "name": "Ginger",
+        "short_description": "250gm, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-3-300x270.png",
+        "price": "3.44"
+      },
+      {
+        "id": 52,
+        "name": "Bell Pepper Red",
+        "short_description": "1kg, Price",
+        "preview_image": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/92f1ea7dcce3b5d06cd1b1418f9b9413-3-1-300x262.png",
+        "price": "2"
+      }
+    ],
+    "category": [
+      {
+        "id": 19,
+        "name": "Bakery &amp; Snacks",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-6-1.png",
+        "color": "#D3B0E0"
+      },
+      {
+        "id": 21,
+        "name": "Beverages",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-6-2.png",
+        "color": "#b7dff5"
+      },
+      {
+        "id": 17,
+        "name": "Cooking Oil &amp; Ghee",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-8.png",
+        "color": "#f8a44c"
+      },
+      {
+        "id": 20,
+        "name": "Dairy &amp; Eggs",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/Group-6837.png",
+        "color": "#fde598"
+      },
+      {
+        "id": 16,
+        "name": "Frash Fruits &amp; Vegetable",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-6.png",
+        "color": "#53b175"
+      },
+      {
+        "id": 18,
+        "name": "Meat &amp; Fish",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/pngfuel-9.png",
+        "color": "#f7a593"
+      },
+      {
+        "id": 15,
+        "name": "Other",
+        "icon": "https://it-flutter.wdscode.guru/wp-content/uploads/2024/04/predzakaz-sumka-shopper-vsyo-budet-ukraina.png",
+        "color": "#d1d1d1"
+      }
+    ]
+  }
+}

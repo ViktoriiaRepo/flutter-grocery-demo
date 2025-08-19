@@ -18,7 +18,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final p = widget.product;
 
     return Scaffold(
+
       body: CustomScrollView(
+
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -37,12 +39,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 color: const Color(0xFFF8F8F8),
+                child: Padding(
+                    padding:EdgeInsets.only(top: 70,bottom:30),
                 child: Center(
                   child: Image.network(
                     p.imageUrl,
                     fit: BoxFit.contain,
                     errorBuilder: (_, __, ___) => const Icon(Icons.image, size: 64),
                   ),
+                ),
                 ),
               ),
             ),

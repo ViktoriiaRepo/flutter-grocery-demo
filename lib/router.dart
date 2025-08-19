@@ -1,3 +1,4 @@
+import 'package:first_app/pages/intro_page.dart';
 import 'package:first_app/pages/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,17 +6,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'pages/shop_page.dart';
 import 'pages/categories_page.dart';
+import 'pages/splash_page.dart';
 import 'pages/cart_page.dart';
 import 'pages/favourites_page.dart';
 import 'pages/account_page.dart';
-import 'pages/login.dart';
+import 'pages/login_page.dart';
 import 'pages/signup.dart';
 import 'catalog_data.dart';
 import 'pages/product_detail_page.dart';
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: SplashPage.path,
   routes: [
+    GoRoute(
+      path: SplashPage.path,
+      name: 'splash',
+      builder: (_, __) => const SplashPage(),
+    ),
+    GoRoute(
+      path: IntroPage.path,
+      name: 'intro',
+      builder: (_, __) => const IntroPage(),
+    ),
     GoRoute(
       path: '/login',
       name: 'login',
