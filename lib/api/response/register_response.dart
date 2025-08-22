@@ -2,14 +2,13 @@ import 'package:first_app/api/http_response.dart';
 import 'package:first_app/api/response/server_response.dart';
 import 'package:first_app/utils/json_map.dart';
 
-class LoginResponse extends ServerResponse {
+class RegisterResponse extends ServerResponse {
   String token = "";
   String userEmail = "";
-  String userNicename = "";
   String userDisplayName = "";
   String message = "";
 
-  LoginResponse(HttpServerResponse response) : super(response);
+  RegisterResponse(HttpServerResponse response) : super(response);
 
   @override
   parse(HttpServerResponse response) {
@@ -17,11 +16,11 @@ class LoginResponse extends ServerResponse {
     if(isSuccess) {
       var json = JsonMap.toMap(response.data)["data"] ?? {};
       token = json["token"] ?? "";
-      userNicename = json["user_nicename"] ?? "";
+
       userEmail = json["user_email"] ?? "";
       userDisplayName = json["user_display_name"] ?? "";
     } else {
-        message = response.message;
+      message = response.message;
     }
 
   }

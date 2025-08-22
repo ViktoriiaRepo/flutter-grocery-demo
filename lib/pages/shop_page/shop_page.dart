@@ -1,11 +1,15 @@
+// lib/pages/shop/shop_page.dart
+import 'package:first_app/api/response/home_response.dart';
+import 'package:first_app/api/server_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../catalog_data.dart';
-import '../models/catalog_models.dart';
-import '../widgets/product_card.dart';
-import '../widgets/category_card.dart';
-import '../widgets/home_banner.dart';
+import '../../models/catalog_models.dart';
+import '../../widgets/product_card.dart';
+import '../../widgets/category_card.dart';
+import '../../widgets/home_banner.dart';
+import 'package:first_app/widgets/product_loader.dart';
+import 'package:first_app/pages/products_page/products_page.dart';
 
 class ProductSection {
   final String key;
@@ -28,8 +32,10 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: CatalogData.ensureLoaded(),
+    final api = ServerApi();
+
+    return FutureBuilder<HomeResponse>(
+      future: api.loadHome(),
       builder: (context, snap) {
         if (snap.connectionState != ConnectionState.done) {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -38,15 +44,28 @@ class ShopPage extends StatelessWidget {
           return Scaffold(body: Center(child: Text('Error: ${snap.error}')));
         }
 
+        final res = snap.data!;
+
+
+        ProductItem toUi(HomeProduct p) => ProductItem(
+          id: p.id,
+          title: p.name,
+          subtitle: p.shortDescription,
+          imageUrl: p.imageUrl,
+          price: p.price,
+          category: '',
+          section: null,
+          description: null,
+          nutritions: const {},
+          onAdd: () => debugPrint('Add ${p.name}'),
+        );
+
         final sections = <ProductSection>[
-          ProductSection('exclusive', 'Exclusive Offer',
-              CatalogData.exclusive /*.take(6)*/ .toList()),
-          ProductSection('best', 'Best Selling',
-              CatalogData.bestSelling /*.take(6)*/ .toList()),
+          ProductSection('exclusive', 'Exclusive Offer', res.exclusive.map(toUi).toList()),
+          ProductSection('best', 'Best Selling', res.best.map(toUi).toList()),
         ];
 
-
-        final cats = CatalogData.categories;
+        final cats = res.categories;
 
         return Scaffold(
           appBar: AppBar(
@@ -64,49 +83,54 @@ class ShopPage extends StatelessWidget {
                   child: _SearchInput(),
                 ),
                 const SizedBox(height: 20),
-                HomeBanner(),
+                HomeBanner(images: res.slider),
                 const SizedBox(height: 30),
 
                 for (final s in sections) ...[
-                  _ProductsSection(
-                    title: s.title,
-                    items: s.items,
-                    sectionKey: s.key,
-                  ),
+                  _ProductsSection(title: s.title, items: s.items, sectionKey: s.key),
                   const SizedBox(height: 12),
                 ],
 
-                _SectionHeader(
-                  title: 'Categories',
-                  onSeeAll: () => context.goNamed('explore'),
+                _SectionHeader(title: 'Categories', onSeeAll: () => context.goNamed('explore')),
+
+                Builder(
+                  builder: (context) {
+
+                    const hPad = 25.0;
+                    const gap  = 8.0;
+                    final screenW   = MediaQuery.of(context).size.width;
+                    final available = screenW - hPad * 2;
+                    final cardW     = (available - gap) / 1.5;
+
+                    return SizedBox(
+                      height: 120,
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(horizontal: hPad),
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: cats.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: gap),
+                        itemBuilder: (_, i) {
+                          final c = cats[i];
+                          final item = CategoryItem(
+                            title: c.title,
+                            imageUrl: c.iconUrl,
+                            background: _palette[i % _palette.length],
+                            onTap: () => context.goNamed(
+                              'categoryProducts',
+                              pathParameters: {'id': c.id},
+                            ),
+                          );
+                          return SizedBox(
+                            width: cardW,
+                            child: CategoryCard(category: item),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
 
-                SizedBox(
-                  height: 120,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: cats.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 16),
-                    itemBuilder: (_, i) {
-                      final c = cats[i];
-
-                      final item = CategoryItem(
-                        title: c.title,
-                        imageUrl: c.imageUrl,
-                        background: _palette[i % _palette.length],
-                        onTap: () => context.goNamed(
-                          'categoryProducts',
-                          pathParameters: {'id': c.id},
-                        ),
-                      );
-                      return SizedBox(
-                        width: 170,
-                        child: CategoryCard(category: item),
-                      );
-                    },
-                  ),
-                ),
                 const SizedBox(height: 24),
               ],
             ),
@@ -114,6 +138,17 @@ class ShopPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  static Color? _parseHexColor(String hex) {
+    try {
+      var h = hex.replaceFirst('#', '');
+      if (h.length == 3) h = h.split('').map((c) => '$c$c').join();
+      if (h.length == 6) h = 'FF$h';
+      return Color(int.parse(h, radix: 16));
+    } catch (_) {
+      return null;
+    }
   }
 }
 
@@ -135,10 +170,10 @@ class _ProductsSection extends StatelessWidget {
       children: [
         _SectionHeader(
           title: title,
-          onSeeAll: () => context.goNamed(
-            'sectionProducts',
-            pathParameters: {'kind': sectionKey},
-          ),
+            onSeeAll: () => context.goNamed(
+              'sectionProducts',
+              pathParameters: {'kind': sectionKey},
+            )
         ),
         SizedBox(
           height: 250,
@@ -152,14 +187,18 @@ class _ProductsSection extends StatelessWidget {
               return SizedBox(
                 width: 170,
                 child: InkWell(
-                  onTap: () =>
-                      context.goNamed('product', pathParameters: {'id': p.id}),
+                  onTap: () => context.goNamed(
+                    'product',
+                    pathParameters: {'id': p.id},
+                    extra: p,
+                  ),
                   child: ProductCard(product: p),
                 ),
               );
             },
           ),
-        ),
+        )
+
       ],
     );
   }
@@ -176,13 +215,7 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8, left: 25, right: 25, bottom: 12),
       child: Row(
         children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.w800),
-          ),
+          Text(title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
           const Spacer(),
           TextButton(
             onPressed: onSeeAll,
@@ -201,8 +234,6 @@ class _SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (v) => debugPrint('search: $v'),
-      onSubmitted: (v) => debugPrint('submit: $v'),
       textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         hintText: 'Search Store',
@@ -210,10 +241,7 @@ class _SearchInput extends StatelessWidget {
         filled: true,
         fillColor: const Color(0xFFF2F3F2),
         contentPadding: const EdgeInsets.symmetric(vertical: 18),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(22),
-          borderSide: BorderSide.none,
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(22), borderSide: BorderSide.none),
       ),
     );
   }

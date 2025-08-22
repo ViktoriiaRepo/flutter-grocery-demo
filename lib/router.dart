@@ -1,19 +1,22 @@
-import 'package:first_app/pages/intro_page.dart';
-import 'package:first_app/pages/products_page.dart';
+import 'package:first_app/models/catalog_models.dart';
+import 'package:first_app/pages/intro_page/intro_page.dart';
+import 'package:first_app/pages/products_page/products_page.dart';
+import 'package:first_app/utils/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'pages/shop_page.dart';
-import 'pages/categories_page.dart';
-import 'pages/splash_page.dart';
-import 'pages/cart_page.dart';
-import 'pages/favourites_page.dart';
-import 'pages/account_page.dart';
-import 'pages/login_page.dart';
-import 'pages/signup.dart';
+import 'pages/shop_page/shop_page.dart';
+import 'pages/categories_page/categories_page.dart';
+import 'pages/splash_page/splash_page.dart';
+import 'pages/cart_page/cart_page.dart';
+import 'pages/favourites_page/favourites_page.dart';
+import 'pages/account_page/account_page.dart';
+import 'pages/login_page/login_page.dart';
+import 'pages/signup_page/signup.dart';
 import 'catalog_data.dart';
-import 'pages/product_detail_page.dart';
+import 'pages/product_details_page/product_detail_page.dart';
+import 'package:first_app/widgets/product_loader.dart';
 
 final router = GoRouter(
   initialLocation: SplashPage.path,
@@ -49,20 +52,25 @@ final router = GoRouter(
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
-              path: '/explore',
-              name: 'explore',
-              builder: (_, __) => const CategoriesPage(showSearch: true),
+            path: '/explore',
+            name: 'explore',
+            builder: (_, __) => const CategoriesPage(showSearch: true),
             routes: [
-              GoRoute(
-                path: 'category/:id',
-                name: 'categoryProducts',
-                builder: (_, state) => ProductsPage(categoryId: state.pathParameters['id']!),
-              ),
+
               GoRoute(
                 path: 'products',
                 name: 'products',
                 builder: (_, __) => const ProductsPage(),
               ),
+
+
+              GoRoute(
+                path: 'category/:id',
+                name: 'categoryProducts',
+                builder: (_, state) =>
+                    ProductsPage(categoryId: state.pathParameters['id']!),
+              ),
+
 
               GoRoute(
                 path: 'section/:kind',
@@ -70,31 +78,29 @@ final router = GoRouter(
                 builder: (_, state) =>
                     ProductsPage(section: state.pathParameters['kind']!),
               ),
+
+              // пошук
               GoRoute(
                 path: 'search',
                 name: 'productsSearch',
                 builder: (_, __) => const ProductsPage(showSearch: true),
               ),
+
+
               GoRoute(
-                path: '/product/:id',
+                path: 'product/:id',
                 name: 'product',
                 builder: (_, state) {
                   final id = state.pathParameters['id']!;
-                  return FutureBuilder(
-                    future: CatalogData.ensureLoaded(),
-                    builder: (context, snap) {
-                      if (snap.connectionState != ConnectionState.done) {
-                        return const Scaffold(body: Center(child: CircularProgressIndicator()));
-                      }
-                      final product = CatalogData.getById(id);
-                      return ProductDetailPage(product: product);
-                    },
-                  );
+                  final ProductItem? preview =
+                  state.extra is ProductItem ? state.extra as ProductItem : null;
+                  return ProductLoader(id: id, preview: preview);
                 },
               ),
             ],
           ),
         ]),
+
         StatefulShellBranch(routes: [
           GoRoute(path: '/cart', name: 'cart', builder: (_, __) => const CartPage()),
         ]),
@@ -102,7 +108,16 @@ final router = GoRouter(
           GoRoute(path: '/favourites', name: 'favourites', builder: (_, __) => const FavouritesPage()),
         ]),
         StatefulShellBranch(routes: [
-          GoRoute(path: '/account', name: 'account', builder: (_, __) => const AccountPage()),
+          GoRoute(
+              path: '/account',
+              name: 'account',
+              builder: (_, __) => const AccountPage(),
+              redirect: (context, state) {
+                final token = AppSettings.getInstance().getToken();
+                if (token.isEmpty) return '/login';
+                return null;
+              },
+          ),
         ]),
       ],
     ),
@@ -163,7 +178,17 @@ class _HomeShell extends StatelessWidget {
                 backgroundColor: Colors.white,
                 elevation: 0,
                 currentIndex: idx,
-                onTap: _onTap,
+                onTap: (i) {
+                  final token = AppSettings.getInstance().getToken();
+                  if (i == 4 && token.isEmpty) {
+                    context.go('/login');
+                    return;
+                  }
+                  navigationShell.goBranch(
+                    i,
+                    initialLocation: i == navigationShell.currentIndex,
+                  );
+                },
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: kActive,
                 unselectedItemColor: kInactive,

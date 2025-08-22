@@ -1,6 +1,7 @@
 // lib/pages/product_detail_page.dart
+import 'package:first_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import '../models/catalog_models.dart';
+import '../../models/catalog_models.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final ProductItem product;
@@ -137,11 +138,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           height: 56,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF53B175),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              backgroundColor: AppColor.accentColor ,
+              foregroundColor: AppColor.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
             ),
             onPressed: () {
-
               debugPrint('Add to basket: ${p.title} x$qty');
               p.onAdd();
             },

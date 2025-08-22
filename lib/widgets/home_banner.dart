@@ -1,8 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class HomeBanner extends StatelessWidget {
-  HomeBanner({super.key});
+class HomeBanner extends StatefulWidget {
+  const HomeBanner({super.key, required this.images});
+  final List<String> images;
+
+  @override
+  State<HomeBanner> createState() => _HomeBannerState();
+}
+
+class _HomeBannerState extends State<HomeBanner> {
 
   final _controller = CarouselSliderController();
   final _current = ValueNotifier<int>(0);
@@ -17,15 +24,16 @@ class HomeBanner extends StatelessWidget {
       children: [
         CarouselSlider.builder(
           carouselController: _controller,
-          itemCount: _slides.length,
-          itemBuilder: (_, i, __) => _BannerCard(imageUrl: _slides[i]),
+          itemCount: widget.images.length,
+          itemBuilder: (_, i, __) => _BannerCard(imageUrl: widget.images[i]),
           options: CarouselOptions(
             viewportFraction: 0.88,
             aspectRatio: 3.2,
             enlargeCenterPage: true,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 4),
-            onPageChanged: (i, _) => _current.value = i,
+
+            onPageChanged: (i, _) => setState(() => _current.value = i),
           ),
         ),
 
@@ -77,30 +85,7 @@ class _BannerCard extends StatelessWidget {
           Positioned.fill(
             child: Align(
               alignment: const Alignment(1, -0.05),
-              child: const Padding(
-                padding: EdgeInsets.only(right: 22),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Fresh Vegetables',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      'Get Up To 40% OFF',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF53B175),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
             ),
           ),
         ],

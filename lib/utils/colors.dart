@@ -10,4 +10,8 @@ class AppColor {
   static const Color inputFill = Color(0xFFF2F3F2);
 
   static const Color errorColor = Color(0xFFFF0000);
+
+  static const Color white = Color(0xFFFFFFFF);
+
+  static const Color white70 = Colors.white70;
 }

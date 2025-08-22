@@ -14,6 +14,7 @@ class _LoginFormState extends State<LoginForm> {
   GlobalKey<FormState> form = GlobalKey();
   TextEditingController login = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool _showPass = false;
 
   @override
   void initState() {
@@ -46,12 +47,20 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 30,),
           TextFormField(
             controller: password,
-            obscureText: true,
+            obscureText: !_showPass,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
               hintText: "Password",
-              label: Text("Password"),
+              label: const Text("Password"),
+              border: const UnderlineInputBorder(),
+              suffixIcon: IconButton(
+                tooltip: _showPass ? 'Hide password' : 'Show password',
+                onPressed: () => setState(() => _showPass = !_showPass),
+                icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility),
+                color: AppColor.descColor,
+              ),
             ),
+            onFieldSubmitted: (_) => _onClick(),
           ),
           const SizedBox(height: 30,),
           SizedBox(

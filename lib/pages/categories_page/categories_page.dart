@@ -1,8 +1,8 @@
 // lib/pages/categories_page.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../catalog_data.dart';
-import '../widgets/explore_category_card.dart';
+import '../../catalog_data.dart';
+import '../../widgets/explore_category_card.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key, this.showSearch = true});

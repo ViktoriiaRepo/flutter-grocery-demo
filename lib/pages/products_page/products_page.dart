@@ -1,0 +1,140 @@
+// lib/pages/products_page.dart
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:first_app/api/server_api.dart';
+import 'package:first_app/api/response/products_response.dart';
+import 'package:first_app/models/catalog_models.dart';
+import 'package:first_app/widgets/product_card.dart';
+
+class ProductsPage extends StatefulWidget {
+  const ProductsPage({
+    super.key,
+    this.categoryId,
+    this.section,
+    this.showSearch = false,
+  });
+
+  final String? categoryId;
+  final String? section;
+  final bool showSearch;
+
+  @override
+  State<ProductsPage> createState() => _ProductsPageState();
+}
+
+class _ProductsPageState extends State<ProductsPage> {
+  final _api = ServerApi();
+  final _searchC = TextEditingController();
+
+  late Future<ProductsResponse> _future;
+  String _query = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _load();
+  }
+
+  Future<ProductsResponse> _load() {
+    return _api.getProducts(
+      categoryId: widget.categoryId,
+      query: _query,
+    );
+  }
+
+  void _doSearch() {
+    setState(() {
+      _query = _searchC.text.trim();
+      _future = _load();
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchC.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final title = widget.categoryId != null
+        ? 'Products'
+        : 'Products';
+
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Column(
+        children: [
+          if (widget.showSearch) ...[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: TextField(
+                controller: _searchC,
+                textInputAction: TextInputAction.search,
+                onSubmitted: (_) => _doSearch(),
+                decoration: InputDecoration(
+                  hintText: 'Search products',
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: _doSearch,
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFF2F3F2),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+              ),
+            ),
+          ],
+
+          Expanded(
+            child: FutureBuilder<ProductsResponse>(
+              future: _future,
+              builder: (context, snap) {
+                if (snap.connectionState != ConnectionState.done) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snap.hasError) {
+                  return Center(child: Text('Error: ${snap.error}'));
+                }
+
+                final res = snap.data!;
+                if (!res.isSuccess) {
+                  return Center(child: Text(res.message.isEmpty ? 'Failed to load' : res.message));
+                }
+
+                final items = res.items;
+                if (items.isEmpty) {
+                  return const Center(child: Text('No products'));
+                }
+
+                return GridView.builder(
+                  padding: const EdgeInsets.fromLTRB(25, 16, 25, 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    mainAxisExtent: 240,
+                  ),
+                  itemCount: items.length,
+                  itemBuilder: (_, i) {
+                    final p = items[i];
+                    return InkWell(
+                      onTap: () => context.goNamed('product', pathParameters: {'id': p.id},extra: p,),
+                      child: ProductCard(product: p),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

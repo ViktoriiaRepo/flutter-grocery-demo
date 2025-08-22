@@ -1,5 +1,6 @@
-import 'package:first_app/pages/shop_page.dart';
+
 import 'package:first_app/utils/app_settings.dart';
+import 'package:first_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -32,13 +33,13 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF53B175),
+      backgroundColor:  AppColor.accentColor,
       body: Center(
         child: SvgPicture.asset(
           'assets/carrot.svg',
           width: 64,
           height: 64,
-          color: Colors.white,
+          color: AppColor.white,
         ),
       ),
     );

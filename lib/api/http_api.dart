@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:first_app/api/auth_interceptor.dart';
 import 'package:first_app/api/http_response.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 
 class HttpApi {
   late Dio dio;
@@ -12,11 +14,13 @@ class HttpApi {
   }){
     dio = Dio(
         BaseOptions(
-            baseUrl: server
+            baseUrl: server,
+            validateStatus: (s) => true,
         )
       );
     dio.interceptors.add(AuthInterceptor());
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true ));
+
     }
 
 
@@ -39,11 +43,12 @@ class HttpApi {
     required Map<String, dynamic> data,
   }) async {
     try {
-      var response = await dio.get(path,
-          data: data
+      final response = await dio.get(
+        path,
+        queryParameters: data,
       );
       return _mapSuccess(response);
-    } on DioException catch (e){
+    } on DioException catch (e) {
       return _mapError(e);
     }
   }
@@ -78,5 +83,21 @@ class HttpApi {
         message: exception.message ?? "Error load data from server",
         data: exception.response?.data
     );
+  }
+
+  Future<HttpServerResponse> sendForm({
+    required String path,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      final response = await dio.post(
+        path,
+        data: FormData.fromMap(data),
+        options: Options(contentType: 'multipart/form-data'),
+      );
+      return _mapSuccess(response);
+    } on DioException catch (e) {
+      return _mapError(e);
+    }
   }
 }

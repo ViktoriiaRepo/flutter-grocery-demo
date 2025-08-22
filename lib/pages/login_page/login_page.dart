@@ -1,11 +1,10 @@
 import 'package:first_app/api/server_api.dart';
 import 'package:first_app/utils/app_settings.dart';
 import 'package:first_app/utils/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/login_form.dart';
+import '../../widgets/login_form.dart';
+import 'package:go_router/go_router.dart';
 
 
 
@@ -78,6 +77,26 @@ class _LoginPageState extends State<LoginPage> {
                 LoginForm(
                   onLogin: _onLogin,
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don’t have an account? ",
+                      style: TextStyle(color: AppColor.descColor),
+                    ),
+                    GestureDetector(
+                      onTap: () => context.go('/signup'),
+                      child: Text(
+                        'Signup',
+                        style: TextStyle(
+                          color: AppColor.accentColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -85,20 +104,30 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  _onLogin(String login, String password){
-   api.login(login: login, password: password)
-       .then((value) {
-         if(value.isSuccess) {
-           AppSettings.getInstance().saveToken(value.token);
-           // print("Success ${value.data}");
-         } else {
-           setState(() {
-             error = value.message;
-           });
-           // print("Error ${value.message} ${value.data}");
-         }
-   });
+  _onLogin(String login, String password) async {
+    try {
+      final value = await api.login(login: login, password: password);
 
+      if (value.isSuccess) {
+        final settings = AppSettings.getInstance();
+        settings.saveToken(value.token);
+        settings.saveUserEmail(value.userEmail);
+        settings.saveUserName(value.userDisplayName);
 
+        if (!mounted) return;
+        context.go('/account');
+      } else {
+        if (!mounted) return;
+        setState(() {
+          error = value.message;
+        });
+      }
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        error = 'Login error: $e';
+      });
+    }
   }
+
 }

@@ -16,8 +16,10 @@ class AppSettings {
 
   AppSettings._();
 
-  logout() {
+  void logout() {
     prefs.remove("token");
+    prefs.remove("email");
+    prefs.remove("name");
   }
 
   saveToken(String token) {
@@ -27,4 +29,11 @@ class AppSettings {
   String getToken() {
     return prefs.getString("token") ?? "";
   }
+  void saveUserEmail(String email) => prefs.setString("email", email);
+  String getUserEmail() => prefs.getString("email") ?? "";
+
+  void saveUserName(String name) => prefs.setString("name", name);
+  String getUserName() => prefs.getString("name") ?? "";
+
+
 }
