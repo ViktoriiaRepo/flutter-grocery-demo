@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FavouritesPage extends StatelessWidget {
+  static const String path = '/favourites';
   const FavouritesPage({super.key});
 
   @override

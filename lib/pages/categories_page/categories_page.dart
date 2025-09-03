@@ -5,6 +5,7 @@ import '../../catalog_data.dart';
 import '../../widgets/explore_category_card.dart';
 
 class CategoriesPage extends StatefulWidget {
+  static const String path = '/explore';
   const CategoriesPage({super.key, this.showSearch = true});
   final bool showSearch;
 

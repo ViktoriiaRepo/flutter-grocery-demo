@@ -1,39 +1,55 @@
+// lib/utils/app_settings.dart
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AppSettings {
-  late SharedPreferences prefs;
-
-  init() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  static AppSettings? _instance;
-
-  static AppSettings getInstance() {
-    _instance ??= AppSettings._();
-    return _instance!;
-  }
-
+class AppSettings extends ChangeNotifier {
   AppSettings._();
 
-  void logout() {
-    prefs.remove("token");
-    prefs.remove("email");
-    prefs.remove("name");
+  static final AppSettings _instance = AppSettings._();
+  static AppSettings getInstance() => _instance;
+
+  SharedPreferences? _prefs;
+  bool get isReady => _prefs != null;
+
+  static Future<void> init() async {
+    if (_instance._prefs == null) {
+      _instance._prefs = await SharedPreferences.getInstance();
+    }
   }
 
-  saveToken(String token) {
-    prefs.setString("token", token);
+  SharedPreferences get _sp {
+    final p = _prefs;
+    if (p == null) {
+      throw StateError('AppSettings.init() was not awaited before use.');
+    }
+    return p;
   }
 
-  String getToken() {
-    return prefs.getString("token") ?? "";
+  // ---- getters
+  String getToken() => _sp.getString('token') ?? '';
+  String getUserEmail() => _sp.getString('email') ?? '';
+  String getUserName() => _sp.getString('name') ?? '';
+
+  // ---- setters + notify
+  Future<void> saveToken(String token) async {
+    await _sp.setString('token', token);
+    notifyListeners();
   }
-  void saveUserEmail(String email) => prefs.setString("email", email);
-  String getUserEmail() => prefs.getString("email") ?? "";
 
-  void saveUserName(String name) => prefs.setString("name", name);
-  String getUserName() => prefs.getString("name") ?? "";
+  Future<void> saveUserEmail(String email) async {
+    await _sp.setString('email', email);
+    notifyListeners();
+  }
 
+  Future<void> saveUserName(String name) async {
+    await _sp.setString('name', name);
+    notifyListeners();
+  }
 
+  Future<void> logout() async {
+    await _sp.remove('token');
+    await _sp.remove('email');
+    await _sp.remove('name');
+    notifyListeners();
+  }
 }

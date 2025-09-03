@@ -1,6 +1,8 @@
 // lib/pages/shop/shop_page.dart
 import 'package:first_app/api/response/home_response.dart';
 import 'package:first_app/api/server_api.dart';
+import 'package:first_app/models/product_short.dart';
+import 'package:first_app/pages/cart_page/cart_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,6 +21,7 @@ class ProductSection {
 }
 
 class ShopPage extends StatelessWidget {
+  static const String path = '/';
   const ShopPage({super.key});
 
   static const _palette = <Color>[
@@ -32,6 +35,7 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Home page rebuild");
     final api = ServerApi();
 
     return FutureBuilder<HomeResponse>(
@@ -56,8 +60,16 @@ class ShopPage extends StatelessWidget {
           category: '',
           section: null,
           description: null,
-          nutritions: const {},
-          onAdd: () => debugPrint('Add ${p.name}'),
+          nutritions: const {},onAdd: () {
+          final short = ProductShort(
+            id: p.id,
+            title: p.name,
+            imageUrl: p.imageUrl,
+            price: p.price,
+          );
+          CartData.of(context).addProduct(short);
+        },
+
         );
 
         final sections = <ProductSection>[
@@ -138,6 +150,8 @@ class ShopPage extends StatelessWidget {
         );
       },
     );
+
+
   }
 
   static Color? _parseHexColor(String hex) {
@@ -150,6 +164,10 @@ class ShopPage extends StatelessWidget {
       return null;
     }
   }
+  void _onAddProductToCart(BuildContext ctx, ProductShort product) {
+    CartData.of(ctx).addProduct(product);
+  }
+
 }
 
 class _ProductsSection extends StatelessWidget {

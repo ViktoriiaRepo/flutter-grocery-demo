@@ -4,6 +4,7 @@ import '../../utils/app_settings.dart';
 import '../../utils/colors.dart';
 
 class AccountPage extends StatelessWidget {
+  static const String path = '/account';
   const AccountPage({super.key});
 
   @override
