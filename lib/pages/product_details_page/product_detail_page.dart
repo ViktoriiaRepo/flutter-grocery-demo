@@ -1,7 +1,12 @@
 // lib/pages/product_detail_page.dart
+import 'package:first_app/models/product_short.dart';
+import 'package:first_app/pages/cart_page/cart_data.dart';
+import 'package:first_app/pages/favourites_page/favourites_data.dart';
 import 'package:first_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import '../../models/catalog_models.dart';
+import 'package:go_router/go_router.dart';
+
 
 class ProductDetailPage extends StatefulWidget {
   final ProductItem product;
@@ -28,15 +33,40 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             expandedHeight: 260,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).maybePop(),
-            ),
-            actions: const [
+              onPressed: () {
 
-              Padding(
-                padding: EdgeInsets.only(right: 8),
-                child: Icon(Icons.favorite_border),
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go('/');
+                }
+              },
+            ),
+            actions: [
+              Builder(
+                builder: (ctx) {
+                  final fav = FavouritesData.of(ctx);
+                  final isFav = fav.isFavourite(p.id);
+
+                  return IconButton(
+                    padding: const EdgeInsets.only(right: 8),
+                    icon: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: isFav ? Colors.red : null,
+                    ),
+                    onPressed: () {
+                      fav.toggle(ProductShort(
+                        id: p.id,
+                        title: p.title,
+                        imageUrl: p.imageUrl,
+                        price: p.price,
+                      ));
+                    },
+                  );
+                },
               ),
             ],
+
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 color: const Color(0xFFF8F8F8),
@@ -143,8 +173,25 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
             ),
             onPressed: () {
-              debugPrint('Add to basket: ${p.title} x$qty');
-              p.onAdd();
+              final p = widget.product;
+
+              final short = ProductShort(
+                id: p.id,
+                title: p.title,
+                imageUrl: p.imageUrl,
+                price: p.price,
+              );
+
+              final cart = CartData.of(context);
+              for (var i = 0; i < qty; i++) {
+                cart.addProduct(short);
+              }
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Added ${p.title} ×$qty to cart')),
+              );
+
+
             },
             child: const Text('Add To Basket'),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class ProductItem {
   final String id;
   final String title;
@@ -11,6 +12,8 @@ class ProductItem {
   final String? description;
   final Map<String, String> nutritions;
   final VoidCallback onAdd;
+
+
 
   const ProductItem({
     required this.id,

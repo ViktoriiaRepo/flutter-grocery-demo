@@ -60,7 +60,8 @@ class ShopPage extends StatelessWidget {
           category: '',
           section: null,
           description: null,
-          nutritions: const {},onAdd: () {
+          nutritions: const {},
+          onAdd: () {
           final short = ProductShort(
             id: p.id,
             title: p.name,
@@ -205,7 +206,7 @@ class _ProductsSection extends StatelessWidget {
               return SizedBox(
                 width: 170,
                 child: InkWell(
-                  onTap: () => context.goNamed(
+                  onTap: () => context.pushNamed(
                     'product',
                     pathParameters: {'id': p.id},
                     extra: p,

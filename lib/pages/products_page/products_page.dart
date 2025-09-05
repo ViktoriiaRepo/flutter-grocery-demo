@@ -6,6 +6,9 @@ import 'package:first_app/api/server_api.dart';
 import 'package:first_app/api/response/products_response.dart';
 import 'package:first_app/models/catalog_models.dart';
 import 'package:first_app/widgets/product_card.dart';
+import 'package:first_app/models/product_short.dart';
+import 'package:first_app/pages/cart_page/cart_data.dart';
+
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({
@@ -54,6 +57,29 @@ class _ProductsPageState extends State<ProductsPage> {
   void dispose() {
     _searchC.dispose();
     super.dispose();
+  }
+
+  ProductItem _withAdd(BuildContext ctx, ProductItem p) {
+    return ProductItem(
+      id: p.id,
+      title: p.title,
+      subtitle: p.subtitle,
+      imageUrl: p.imageUrl,
+      category: p.category,
+      price: p.price,
+      section: p.section,
+      description: p.description,
+      nutritions: p.nutritions,
+      onAdd: () {
+        final short = ProductShort(
+          id: p.id,
+          title: p.title,
+          imageUrl: p.imageUrl,
+          price: p.price,
+        );
+        CartData.of(ctx).addProduct(short);
+      },
+    );
   }
 
   @override
@@ -124,9 +150,14 @@ class _ProductsPageState extends State<ProductsPage> {
                   itemCount: items.length,
                   itemBuilder: (_, i) {
                     final p = items[i];
+                    final ui = _withAdd(context, p);
                     return InkWell(
-                      onTap: () => context.goNamed('product', pathParameters: {'id': p.id},extra: p,),
-                      child: ProductCard(product: p),
+                      onTap: () => context.pushNamed(
+                        'product',
+                        pathParameters: {'id': p.id},
+                        extra: ui,
+                      ),
+                      child: ProductCard(product: ui),
                     );
                   },
                 );

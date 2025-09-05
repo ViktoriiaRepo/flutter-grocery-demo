@@ -1,5 +1,6 @@
 import 'package:first_app/utils/colors.dart';
 import 'package:first_app/widgets/cart_counter.dart';
+import 'package:first_app/widgets/favourites_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,7 +16,7 @@ class AppMainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget item(String title, String asset, int idx, {bool withBadge = false}) {
+    Widget item(String title, String asset, int idx, {Widget? badge}) {
       final active = idx == currentIndex;
 
       final icon = Stack(
@@ -30,12 +31,11 @@ class AppMainMenu extends StatelessWidget {
               BlendMode.srcIn,
             ),
           ),
-          if (withBadge)
-            const Positioned(
+          if (badge != null)
+            Positioned(
               right: -8,
               top: -6,
-
-              child: CartCounterBadge(),
+              child: badge,
             ),
         ],
       );
@@ -72,8 +72,8 @@ class AppMainMenu extends StatelessWidget {
         children: [
           item('Shop',      'shop',     0),
           item('Explore',   'explore',  1),
-          item('Cart',      'cart',     2, withBadge: true),
-          item('Favourite', 'fav',      3),
+          item('Cart',      'cart',     2, badge: const CartCounterBadge()),
+          item('Favourite', 'fav',      3, badge: const FavouritesCounterBadge()),
           item('Account',   'account',  4),
         ],
       ),

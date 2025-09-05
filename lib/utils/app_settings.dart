@@ -52,4 +52,5 @@ class AppSettings extends ChangeNotifier {
     await _sp.remove('name');
     notifyListeners();
   }
+  SharedPreferences get prefs => _sp;
 }
