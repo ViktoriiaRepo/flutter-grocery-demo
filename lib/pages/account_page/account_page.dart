@@ -15,11 +15,14 @@ class AccountPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
-        title: const Text('Account'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: AppColor.textColor,
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          title: const Text('Account', style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+          ),)
       ),
       body: Column(
         children: [

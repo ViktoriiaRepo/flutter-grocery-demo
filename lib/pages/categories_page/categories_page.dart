@@ -40,7 +40,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
         final cats = CatalogData.searchCategories(_query);
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Find Products')),
+          appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              title: const Text('Find Products',
+                style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                ),
+              )
+          ),
           body: Column(
             children: [
               if (widget.showSearch)

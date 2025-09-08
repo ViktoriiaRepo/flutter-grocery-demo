@@ -1,9 +1,11 @@
 // lib/pages/product_detail_page.dart
 import 'package:first_app/models/product_short.dart';
-import 'package:first_app/pages/cart_page/cart_data.dart';
-import 'package:first_app/pages/favourites_page/favourites_data.dart';
+import 'package:first_app/pages/cart_page/bloc/cart_bloc.dart';
+import 'package:first_app/pages/favourites_page/cubit/favourites_cubit.dart';
+
 import 'package:first_app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/catalog_models.dart';
 import 'package:go_router/go_router.dart';
 
@@ -43,24 +45,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               },
             ),
             actions: [
-              Builder(
-                builder: (ctx) {
-                  final fav = FavouritesData.of(ctx);
-                  final isFav = fav.isFavourite(p.id);
-
+              BlocBuilder<FavouritesCubit, FavouritesState>(
+                buildWhen: (prev, next) => prev.isFav(p.id) != next.isFav(p.id),
+                builder: (context, state) {
+                  final isFav = state.isFav(p.id);
                   return IconButton(
-                    padding: const EdgeInsets.only(right: 8),
                     icon: Icon(
                       isFav ? Icons.favorite : Icons.favorite_border,
                       color: isFav ? Colors.red : null,
                     ),
                     onPressed: () {
-                      fav.toggle(ProductShort(
-                        id: p.id,
-                        title: p.title,
-                        imageUrl: p.imageUrl,
-                        price: p.price,
-                      ));
+                      final short = ProductShort(
+                        id: p.id, title: p.title, imageUrl: p.imageUrl, price: p.price,
+                      );
+                      context.read<FavouritesCubit>().toggle(short);
                     },
                   );
                 },
@@ -161,7 +159,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
 
-      // Add to Basket
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(25, 8, 25, 16),
         child: SizedBox(
@@ -182,9 +179,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 price: p.price,
               );
 
-              final cart = CartData.of(context);
+              // final cart = CartData.of(context);
+              final cart = context.read<CartBloc>();
               for (var i = 0; i < qty; i++) {
-                cart.addProduct(short);
+                // cart.addProduct(short);
+                cart.add(CartAdd(short));
               }
 
               ScaffoldMessenger.of(context).showSnackBar(

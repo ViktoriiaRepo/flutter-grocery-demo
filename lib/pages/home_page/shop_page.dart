@@ -2,16 +2,17 @@
 import 'package:first_app/api/response/home_response.dart';
 import 'package:first_app/api/server_api.dart';
 import 'package:first_app/models/product_short.dart';
-import 'package:first_app/pages/cart_page/cart_data.dart';
+import 'package:first_app/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../models/catalog_models.dart';
 import '../../widgets/product_card.dart';
 import '../../widgets/category_card.dart';
 import '../../widgets/home_banner.dart';
-import 'package:first_app/widgets/product_loader.dart';
-import 'package:first_app/pages/products_page/products_page.dart';
+
 
 class ProductSection {
   final String key;
@@ -62,14 +63,15 @@ class ShopPage extends StatelessWidget {
           description: null,
           nutritions: const {},
           onAdd: () {
-          final short = ProductShort(
-            id: p.id,
-            title: p.name,
-            imageUrl: p.imageUrl,
-            price: p.price,
-          );
-          CartData.of(context).addProduct(short);
-        },
+            final short = ProductShort(
+              id: p.id,
+              title: p.name,
+              imageUrl: p.imageUrl,
+              price: p.price,
+            );
+            context.read<CartBloc>().add(CartAdd(short));
+          },
+
 
         );
 
@@ -81,16 +83,16 @@ class ShopPage extends StatelessWidget {
         final cats = res.categories;
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Groceries'),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
+
           body: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 8),
+
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 14),
+                SvgPicture.asset('assets/carrot.svg', width: 28),
+                const SizedBox(height: 20),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: _SearchInput(),
@@ -165,9 +167,9 @@ class ShopPage extends StatelessWidget {
       return null;
     }
   }
-  void _onAddProductToCart(BuildContext ctx, ProductShort product) {
-    CartData.of(ctx).addProduct(product);
-  }
+  // void _onAddProductToCart(BuildContext ctx, ProductShort product) {
+  //   CartData.of(ctx).addProduct(product);
+  // }
 
 }
 

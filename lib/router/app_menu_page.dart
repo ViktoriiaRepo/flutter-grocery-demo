@@ -30,7 +30,6 @@ class AppMenuPage extends StatelessWidget {
         leading: const SizedBox.shrink(),
         title: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: SvgPicture.asset('assets/shop.svg', width: 28),
         ),
       ),
       body: child,

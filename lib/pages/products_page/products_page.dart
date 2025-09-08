@@ -1,5 +1,7 @@
 // lib/pages/products_page.dart
+import 'package:first_app/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:first_app/api/server_api.dart';
@@ -7,7 +9,7 @@ import 'package:first_app/api/response/products_response.dart';
 import 'package:first_app/models/catalog_models.dart';
 import 'package:first_app/widgets/product_card.dart';
 import 'package:first_app/models/product_short.dart';
-import 'package:first_app/pages/cart_page/cart_data.dart';
+
 
 
 class ProductsPage extends StatefulWidget {
@@ -77,7 +79,8 @@ class _ProductsPageState extends State<ProductsPage> {
           imageUrl: p.imageUrl,
           price: p.price,
         );
-        CartData.of(ctx).addProduct(short);
+        // CartData.of(ctx).addProduct(short);
+        context.read<CartBloc>().add(CartAdd(short));
       },
     );
   }
