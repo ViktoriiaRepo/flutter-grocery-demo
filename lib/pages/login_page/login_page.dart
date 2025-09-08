@@ -3,24 +3,30 @@ import 'package:first_app/utils/app_settings.dart';
 import 'package:first_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../widgets/login_form.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import 'widgets/login_form.dart';
+import 'bloc/login_cubit.dart';
 
-
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
   static String path = "/LoginPage";
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => LoginCubit(
+        api: ServerApi(),
+        settings: AppSettings.getInstance(),
+      ),
+      child: const _LoginView(),
+    );
+  }
 }
 
-class _LoginPageState extends State<LoginPage> {
-  bool isLoading = false;
-  String? error;
-
-  ServerApi api = ServerApi();
+class _LoginView extends StatelessWidget {
+  const _LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +47,11 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 40),
-
                 Align(
                   alignment: Alignment.center,
-                  child: SvgPicture.asset(
-                    'assets/carrot.svg',
-                    width: 48,
-                  ),
+                  child: SvgPicture.asset('assets/carrot.svg', width: 48),
                 ),
-
                 const SizedBox(height: 100),
-
                 Text(
                   'Login',
                   style: TextStyle(
@@ -60,9 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
                 Text(
                   'Enter your emails and password',
                   style: TextStyle(
@@ -71,31 +69,50 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-
                 const SizedBox(height: 40),
 
-                LoginForm(
-                  onLogin: _onLogin,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don’t have an account? ",
-                      style: TextStyle(color: AppColor.descColor),
-                    ),
-                    GestureDetector(
-                      onTap: () => context.go('/signup'),
-                      child: Text(
-                        'Signup',
-                        style: TextStyle(
-                          color: AppColor.accentColor,
-                          fontWeight: FontWeight.w600,
+                BlocConsumer<LoginCubit, LoginState>(
+                  listener: (context, state) {
+                    if (state.status == LoginStatus.success) {
+                      context.go('/account');
+                    }
+                    if (state.status == LoginStatus.failure &&
+                        state.errorMessage != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errorMessage!)),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    final loading = state.status == LoginStatus.loading;
+                    return Column(
+                      children: [
+                        LoginForm(
+                          isLoading: loading,
+                          onLogin: (email, pass) =>
+                              context.read<LoginCubit>().submit(email, pass),
                         ),
-                      ),
-                    ),
-                  ],
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Don’t have an account? ",
+                                style: TextStyle(color: AppColor.descColor)),
+                            GestureDetector(
+                              onTap: () => context.go('/signup'),
+                              child: Text(
+                                'Signup',
+                                style: TextStyle(
+                                  color: AppColor.accentColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
@@ -104,30 +121,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  _onLogin(String login, String password) async {
-    try {
-      final value = await api.login(login: login, password: password);
-
-      if (value.isSuccess) {
-        final settings = AppSettings.getInstance();
-        settings.saveToken(value.token);
-        settings.saveUserEmail(value.userEmail);
-        settings.saveUserName(value.userDisplayName);
-
-        if (!mounted) return;
-        context.go('/account');
-      } else {
-        if (!mounted) return;
-        setState(() {
-          error = value.message;
-        });
-      }
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        error = 'Login error: $e';
-      });
-    }
-  }
-
 }

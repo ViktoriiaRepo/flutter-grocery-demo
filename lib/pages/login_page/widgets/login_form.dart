@@ -1,25 +1,25 @@
-import 'package:flutter/material.dart';
 import 'package:first_app/utils/colors.dart';
+import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
   final Function(String, String) onLogin;
+  final bool isLoading;
 
-  const LoginForm({super.key, required this.onLogin});
+  const LoginForm({
+    super.key,
+    required this.onLogin,
+    this.isLoading = false,
+  });
 
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  GlobalKey<FormState> form = GlobalKey();
-  TextEditingController login = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final form = GlobalKey<FormState>();
+  final login = TextEditingController();
+  final password = TextEditingController();
   bool _showPass = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -28,6 +28,10 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  void _onClick() {
+    if (widget.isLoading) return;
+    widget.onLogin(login.text.trim(), password.text.trim());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +43,12 @@ class _LoginFormState extends State<LoginForm> {
             controller: login,
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Email",
               label: Text("Email"),
-            )
+            ),
           ),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 30),
           TextFormField(
             controller: password,
             obscureText: !_showPass,
@@ -62,30 +66,29 @@ class _LoginFormState extends State<LoginForm> {
             ),
             onFieldSubmitted: (_) => _onClick(),
           ),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 30),
           SizedBox(
             width: double.infinity,
-            height: 67,
+            height: 56,
             child: FilledButton(
-              onPressed: _onClick,
+              onPressed: widget.isLoading ? null : _onClick,
               style: FilledButton.styleFrom(
                 backgroundColor: AppColor.accentColor,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-                child: Text("Log In"),
-
-
-            )
-          )
-        ]
-      )
-    );
-  }
-  _onClick(){
-    widget.onLogin(
-      login.text.trim(),
-      password.text.trim(),
+              child: widget.isLoading
+                  ? const SizedBox(
+                width: 22, height: 22,
+                child: CircularProgressIndicator(
+                    strokeWidth: 2, color: Colors.white),
+              )
+                  : const Text("Log In"),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
