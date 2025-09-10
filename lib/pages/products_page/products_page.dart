@@ -13,16 +13,20 @@ import 'package:first_app/models/product_short.dart';
 
 
 class ProductsPage extends StatefulWidget {
+  static String path = "/products";
   const ProductsPage({
     super.key,
     this.categoryId,
     this.section,
     this.showSearch = false,
+    this.title,
   });
 
   final String? categoryId;
   final String? section;
   final bool showSearch;
+  final String? title;
+
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
@@ -32,14 +36,26 @@ class _ProductsPageState extends State<ProductsPage> {
   final _api = ServerApi();
   final _searchC = TextEditingController();
 
-  late Future<ProductsResponse> _future;
+
+  late Future<ProductsResponse> future;
   String _query = '';
 
   @override
   void initState() {
     super.initState();
-    _future = _load();
+    future = _load();
   }
+
+  @override
+  void didUpdateWidget(covariant ProductsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.categoryId != widget.categoryId ||
+        oldWidget.section != widget.section) {
+      future = _load();
+      setState(() {});
+    }
+  }
+
 
   Future<ProductsResponse> _load() {
     return _api.getProducts(
@@ -51,7 +67,7 @@ class _ProductsPageState extends State<ProductsPage> {
   void _doSearch() {
     setState(() {
       _query = _searchC.text.trim();
-      _future = _load();
+      future = _load();
     });
   }
 
@@ -88,7 +104,7 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     final title = widget.categoryId != null
-        ? 'Products'
+        ? widget.title.toString()
         : 'Products';
 
     return Scaffold(
@@ -123,7 +139,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
           Expanded(
             child: FutureBuilder<ProductsResponse>(
-              future: _future,
+              future: future,
               builder: (context, snap) {
                 if (snap.connectionState != ConnectionState.done) {
                   return const Center(child: CircularProgressIndicator());

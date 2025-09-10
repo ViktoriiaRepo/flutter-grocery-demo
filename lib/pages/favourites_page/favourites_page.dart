@@ -43,7 +43,7 @@ class FavouritesPage extends StatelessWidget {
                   child: SizedBox(
                     height: 48, width: 48,
                     child: p.imageUrl.isNotEmpty
-                        ? Image.network(p.imageUrl, fit: BoxFit.cover)
+                        ? Image.network(p.imageUrl, fit: BoxFit.contain)
                         : Container(color: const Color(0xFFF3F4F6)),
                   ),
                 ),

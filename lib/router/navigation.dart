@@ -2,7 +2,7 @@ import 'package:first_app/models/catalog_models.dart';
 import 'package:first_app/pages/account_page/account_page.dart';
 import 'package:first_app/pages/cart_page/cart_page.dart';
 import 'package:first_app/pages/favourites_page/favourites_page.dart';
-import 'package:first_app/pages/home_page/shop_page.dart';
+import 'package:first_app/pages/home_page/home_page.dart';
 import 'package:first_app/pages/intro_page/intro_page.dart';
 import 'package:first_app/pages/login_page/login_page.dart';
 import 'package:first_app/pages/categories_page/categories_page.dart';
@@ -27,7 +27,7 @@ class AppNavigation {
         final loc = state.matchedLocation;
         final isPublic = (loc == '/' || loc == IntroPage.path || loc == LoginPage.path);
         if (!authed) return isPublic ? null : LoginPage.path;
-        if (authed && isPublic) return ShopPage.path;
+        if (authed && isPublic) return HomePage.path;
         return null;
       },
       routes: [
@@ -45,9 +45,9 @@ class AppNavigation {
               builder: (context, state, child) => AppMenuPage(child: child),
               routes: [
                 GoRoute(
-                  path: ShopPage.path,
-                  name: 'shop',
-                  builder: (_, __) => const ShopPage(),
+                  path: HomePage.path,
+                  name: 'home',
+                  builder: (_, __) => const HomePage(),
                 ),
                 GoRoute(
                   path: CategoriesPage.path,

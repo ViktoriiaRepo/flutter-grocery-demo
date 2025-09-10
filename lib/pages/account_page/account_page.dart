@@ -96,10 +96,15 @@ class AccountPage extends StatelessWidget {
                   );
                   if (ok != true) return;
 
-                  AppSettings.getInstance().logout();
+
+                  await AppSettings.getInstance().logout();
+
                   if (!context.mounted) return;
+
+
                   context.go('/login');
                 },
+
                 child: const Text('Log Out', style: TextStyle(fontWeight: FontWeight.w600)),
               ),
             ),

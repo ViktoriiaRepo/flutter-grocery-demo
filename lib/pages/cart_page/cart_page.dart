@@ -1,3 +1,4 @@
+import 'package:first_app/pages/cart_page/widgets/checkout_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:first_app/pages/cart_page/bloc/cart_bloc.dart';
@@ -43,7 +44,7 @@ class CartPage extends StatelessWidget {
                       child: SizedBox(
                         height: 56, width: 56,
                         child: p.imageUrl.isNotEmpty
-                            ? Image.network(p.imageUrl, fit: BoxFit.cover)
+                            ? Image.network(p.imageUrl, fit: BoxFit.contain)
                             : Container(color: const Color(0xFFF3F4F6)),
                       ),
                     ),
@@ -97,7 +98,13 @@ class CartPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                   ),
                   onPressed: () {
-                    // TODO: checkout flow
+                    showModalBottomSheet(
+                      context: context,
+                      useRootNavigator: true,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => const CheckoutSheet(),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

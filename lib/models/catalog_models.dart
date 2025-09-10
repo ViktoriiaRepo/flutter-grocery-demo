@@ -42,3 +42,18 @@ class CategoryItem {
     required this.onTap,
   });
 }
+
+
+class ApiCategory {
+  final String id;
+  final String title;
+  final String iconUrl;
+  final String? colorHex;
+
+  ApiCategory({
+    required this.id,
+    required this.title,
+    required this.iconUrl,
+    this.colorHex
+  });
+}

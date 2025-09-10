@@ -1,3 +1,4 @@
+import 'package:first_app/utils/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -60,7 +61,8 @@ class IntroPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async{
+                      await AppSettings.getInstance().markIntroSeen();
                       context.go('/');
                     },
                     child: const Text(

@@ -25,16 +25,18 @@ class AppSettings extends ChangeNotifier {
     return p;
   }
 
-  // ---- getters
+
   String getToken() => _sp.getString('token') ?? '';
   String getUserEmail() => _sp.getString('email') ?? '';
   String getUserName() => _sp.getString('name') ?? '';
 
-  // ---- setters + notify
+
   Future<void> saveToken(String token) async {
     await _sp.setString('token', token);
     notifyListeners();
   }
+
+  Future<void> clearToken() async => _sp.remove('token');
 
   Future<void> saveUserEmail(String email) async {
     await _sp.setString('email', email);
@@ -53,4 +55,8 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
   SharedPreferences get prefs => _sp;
+
+  bool getSeenIntro() => _prefs?.getBool('seen_intro') ?? false;
+  Future<void> markIntroSeen() async => _prefs?.setBool('seen_intro', true);
+
 }

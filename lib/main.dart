@@ -1,6 +1,7 @@
 import 'package:first_app/pages/cart_page/bloc/cart_bloc.dart';
 import 'package:first_app/pages/favourites_page/cubit/favourites_cubit.dart';
 import 'package:first_app/router/navigation.dart';
+import 'package:first_app/router/router.dart';
 import 'package:flutter/material.dart';
 
 import 'package:first_app/utils/app_settings.dart';
@@ -19,7 +20,7 @@ class GroceryApp  extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final router = createRouter();
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => CartBloc()),                  // вже був
@@ -44,7 +45,7 @@ class GroceryApp  extends StatelessWidget {
               ),
               ),
           ),
-          routerConfig: AppNavigation.getRouter(),
+          routerConfig: router,
         ),
     );
 

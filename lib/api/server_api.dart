@@ -6,8 +6,10 @@ import 'package:first_app/api/response/product_response.dart';
 import 'package:first_app/api/response/products_response.dart';
 import 'package:first_app/api/response/register_response.dart';
 import 'package:first_app/api/response/server_response.dart';
+import 'package:first_app/models/cart_product.dart';
 import 'package:first_app/models/catalog_models.dart';
 import 'package:flutter/foundation.dart';
+import 'package:first_app/api/response/order_create_response.dart';
 
 
 class ServerApi {
@@ -69,6 +71,29 @@ class ServerApi {
         .then((v) => ProductsResponse(v));
   }
 
+  Future<List<ApiCategory>> fetchCategories() async {
+    final res = await api.sendGet(path: '/product/categories', data: {});
+    final map = (res.data is Map ? res.data : {}) as Map;
+
+    final list = (map['data'] as List?) ?? const [];
+    return list.map((e) {
+      final m = (e is Map ? e : {}) as Map;
+      final rawName = (m['name'] ?? '').toString();
+      final id      = (m['id'] ?? '').toString();
+      final iconUrl = (m['icon'] ?? '').toString();
+
+
+      return ApiCategory(
+        id: id,
+        title: rawName.replaceAll('&amp;', '&'),
+        iconUrl: iconUrl,
+        colorHex: m['color']?.toString(),
+      );
+    }).toList();
+  }
+
+
+
   Future<ProductItem> fetchProductById(String id) async {
     final res = await api.sendGet(path: '/product', data: {'id': id});
 
@@ -95,4 +120,21 @@ class ServerApi {
       onAdd: () => debugPrint('Add ${(data['name'] ?? '').toString()}'),
     );
   }
+
+
+  Future<OrderCreateResponse> createOrder(List<CartProduct> items) async {
+    final map = <String, dynamic>{};
+    var i = 1;
+    for (final it in items) {
+      map['products[$i][id]'] = it.product.id.toString();
+      map['products[$i][count]'] = it.count.toString();
+      i++;
+    }
+    final res = await api.sendForm(
+      path: '/order/create',
+      data: map,
+    );
+    return OrderCreateResponse(res);
+  }
+
 }

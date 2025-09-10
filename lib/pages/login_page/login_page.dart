@@ -11,7 +11,7 @@ import 'bloc/login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-  static String path = "/LoginPage";
+  static String path = "/login";
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class _LoginView extends StatelessWidget {
                 BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
                     if (state.status == LoginStatus.success) {
-                      context.go('/account');
+                      context.go('/');
                     }
                     if (state.status == LoginStatus.failure &&
                         state.errorMessage != null) {
@@ -99,7 +99,7 @@ class _LoginView extends StatelessWidget {
                             Text("Don’t have an account? ",
                                 style: TextStyle(color: AppColor.descColor)),
                             GestureDetector(
-                              onTap: () => context.go('/signup'),
+                              onTap: () => context.goNamed('signup'),
                               child: Text(
                                 'Signup',
                                 style: TextStyle(
