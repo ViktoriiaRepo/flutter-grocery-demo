@@ -1,5 +1,6 @@
 import 'package:first_app/pages/legal_pages/legal_pages.dart';
 import 'package:first_app/pages/order_accepted_page/order_accepted_page.dart';
+import 'package:first_app/pages/orders_page/orders_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:first_app/utils/app_settings.dart';
@@ -167,6 +168,13 @@ GoRouter createRouter() {
                 final token = AppSettings.getInstance().getToken();
                 return token.isEmpty ? '/login' : null;
               },
+              routes: [
+                GoRoute(
+                  path: 'orders',
+                  name: 'orders',
+                  builder: (_, __) => const OrdersPage(),
+                ),
+              ],
             ),
           ]),
         ],

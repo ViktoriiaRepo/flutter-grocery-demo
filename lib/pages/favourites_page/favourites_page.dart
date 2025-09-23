@@ -60,7 +60,10 @@ class FavouritesPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: () => context.push('/product/${p.id}'),
+                onTap: () => context.pushNamed(
+                  'product',
+                  pathParameters: {'id': p.id.toString()},
+                ),
               );
             },
           );
@@ -72,7 +75,7 @@ class FavouritesPage extends StatelessWidget {
           return SafeArea(
             minimum: const EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: SizedBox(
-              height: 56,
+              height: 67,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.accentColor,

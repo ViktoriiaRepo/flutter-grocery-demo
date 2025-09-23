@@ -40,13 +40,19 @@ class ProductsSection extends StatelessWidget {
               final p = items[i];
               return SizedBox(
                 width: 170,
-                child: InkWell(
-                  onTap: () => context.pushNamed(
+                child: ProductCard(
+                  product: p,
+                  onOpen: () => context.pushNamed(
                     'product',
                     pathParameters: {'id': p.id},
                     extra: p,
                   ),
-                  child: ProductCard(product: p),
+                  onAdd: () {
+                    p.onAdd();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Added: ${p.title}')),
+                    );
+                  },
                 ),
               );
             },

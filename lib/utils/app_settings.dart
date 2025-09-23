@@ -59,4 +59,9 @@ class AppSettings extends ChangeNotifier {
   bool getSeenIntro() => _prefs?.getBool('seen_intro') ?? false;
   Future<void> markIntroSeen() async => _prefs?.setBool('seen_intro', true);
 
+  String getUserAvatar() => _sp.getString('user_avatar') ?? '';
+  Future<void> setUserAvatar(String url) async {
+    await _sp.setString('user_avatar', url);
+    notifyListeners();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:first_app/api/response/product_response.dart';
 import 'package:first_app/api/response/products_response.dart';
 import 'package:first_app/api/response/register_response.dart';
 import 'package:first_app/api/response/server_response.dart';
+import 'package:first_app/models/api_order.dart';
 import 'package:first_app/models/cart_product.dart';
 import 'package:first_app/models/catalog_models.dart';
 import 'package:flutter/foundation.dart';
@@ -135,6 +136,83 @@ class ServerApi {
       data: map,
     );
     return OrderCreateResponse(res);
+  }
+
+
+  Future<List<ApiOrder>> fetchOrders() async {
+    final res = await api.sendGet(path: '/orders', data: {});
+    final payload = res.data;
+
+
+    debugPrint('ORDERS payload: $payload');
+
+    List list;
+
+    if (payload is List) {
+      list = payload;
+    } else if (payload is Map) {
+      final d = payload['data'];
+      if (d is List) {
+        list = d;
+      } else if (d is Map && d['orders'] is List) {
+        list = d['orders'];
+      } else if (payload['orders'] is List) {
+        list = payload['orders'];
+      } else {
+        list = const [];
+      }
+    } else {
+      list = const [];
+    }
+
+    final orders = <ApiOrder>[];
+    for (final e in list) {
+      if (e is Map) {
+        try {
+          orders.add(ApiOrder.fromJson(e));
+        } catch (err) {
+          debugPrint('Order parse error: $err\n$e');
+        }
+      }
+    }
+    return orders;
+  }
+
+  Future<String?> uploadAvatar(String filePath) async {
+    final file = await MultipartFile.fromFile(filePath);
+    final form = FormData.fromMap({
+      'avatar': file,
+    });
+
+    final res = await api.sendFile(path: '/user/avatar', data: form);
+    final body = res.data;
+
+
+    if (body is Map) {
+      Map data;
+      if (body['data'] is Map) {
+        data = body['data'] as Map;
+      } else {
+        data = body;
+      }
+
+      String? url = (data['avatar'] ??
+          data['avatarUrl'] ??
+          data['url'] ??
+          data['image'] ??
+          data['path'])
+          ?.toString();
+
+      if ((url == null || url.isEmpty) && body['avatar'] != null) {
+        url = body['avatar'].toString();
+      }
+
+      if (url != null && url.isNotEmpty) {
+        return url;
+      }
+    }
+
+    return null;
   }
 
 }

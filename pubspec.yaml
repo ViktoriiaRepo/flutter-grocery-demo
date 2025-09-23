@@ -43,6 +43,8 @@ dependencies:
   flutter_bloc: ^9.1.1
   flutter_native_splash: ^2.4.6
   share_plus: ^11.1.0
+  lottie: ^3.3.1
+  image_picker: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +59,7 @@ flutter:
   assets:
     - assets/
     - assets/data/catalog.json
+    - assets/confetti.json
 
 flutter_native_splash:
   android: true
@@ -67,9 +70,8 @@ flutter_native_splash:
   image: assets/splash.png
 
   android_12:
-    image: assets/splashandroid.png
+    image: assets/splash_a.png
     icon_background_color: "#53B175"
-    fullscreen: true
-    image_dark: assets/splashandroid.png
+
 
 

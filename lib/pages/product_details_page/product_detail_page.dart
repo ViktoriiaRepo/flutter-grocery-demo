@@ -94,7 +94,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             iconSize: 24,
                             tooltip: isFav ? 'Remove from favourites' : 'Add to favourites',
                             icon: Icon(isFav ? Icons.favorite : Icons.favorite_border),
-                              color: isFav ? Colors.red : null,
+                            color: isFav ? Colors.red : null,
+
                             onPressed: () {
                               final short = ProductShort(
                                 id: p.id,
@@ -207,7 +208,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(25, 8, 25, 16),
         child: SizedBox(
-          height: 56,
+          height: 67,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColor.accentColor,

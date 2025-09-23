@@ -56,45 +56,61 @@ class _CheckoutSheetState extends State<CheckoutSheet> {
                 ),
                 const SizedBox(height: 24),
                 const Divider(),
-                const SizedBox(height: 12),
+                const SizedBox(height:20),
 
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    style: const TextStyle(color: Colors.black54, fontSize: 12),
+                    style: const TextStyle(
+                        color: Colors.black54,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                    ),
                     children: [
                       const TextSpan(
                           text:
-                          'By placing an order you agree to our '),
+                          'By placing an order you agree to our ',
+                      ),
                       TextSpan(
                         text: 'Terms',
                         style: const TextStyle(
-                            color: Color(0xFF53B175),
-                            fontWeight: FontWeight.w600),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.of(context).pushNamed('/legal/terms'),
+                            color: AppColor.linkColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16
+                        ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              final router = GoRouter.of(context);
+                              Navigator.of(context, rootNavigator: true).pop();
+                              router.pushNamed('terms');
+                            },
                       ),
                       const TextSpan(text: ' And '),
                       TextSpan(
                         text: 'Conditions',
                         style: const TextStyle(
-                            color: Color(0xFF53B175),
-                            fontWeight: FontWeight.w600),
+                            color: AppColor.linkColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.of(context).pushNamed('/legal/conditions'),
+                          ..onTap = () {
+                            final router = GoRouter.of(context);
+                            Navigator.of(context, rootNavigator: true).pop();
+                            router.pushNamed('conditions');
+                          },
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 26),
 
                 SizedBox(
                   width: double.infinity,
-                  height: 52,
+                  height: 67,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.accentColor,
-                      foregroundColor: Colors.white,
+                      foregroundColor: AppColor.white70,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
                     ),
@@ -111,8 +127,8 @@ class _CheckoutSheetState extends State<CheckoutSheet> {
                       setState(() => _loading = false);
 
                       if (res.isSuccess) {
-                        Navigator.pop(context);          // закрили bottom sheet
-                        context.read<CartBloc>().add(CartClear());   // ✅ очистили кошик
+                        Navigator.pop(context);
+                        context.read<CartBloc>().add(CartClear());
                         context.push('/order/accepted', extra: {
                           'orderId': res.orderId,
                           'total':   res.total,
@@ -126,7 +142,13 @@ class _CheckoutSheetState extends State<CheckoutSheet> {
                         ? const SizedBox(
                         width: 22, height: 22,
                         child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Text('Place Order'),
+                        : const Text('Place Order'
+                          ,style: TextStyle(
+                          fontSize: 18,
+                          color: AppColor.white70,
+                          fontWeight: FontWeight.w600,
+                        ),
+                    ),
                   ),
                 ),
               ],
@@ -184,7 +206,7 @@ void _showOrderFailed(BuildContext context, String message) {
             const SizedBox(height: 60),
             SizedBox(
               width: double.infinity,
-              height: 68,
+              height: 67,
               child: ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(

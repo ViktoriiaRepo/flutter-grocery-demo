@@ -13,5 +13,7 @@ class AppColor {
 
   static const Color white = Color(0xFFFFFFFF);
 
-  static const Color white70 = Colors.white70;
+  static const Color white70 = Color(0xFFFFF9FF);
+
+  static const Color linkColor = Color(0xFF6054F1);
 }

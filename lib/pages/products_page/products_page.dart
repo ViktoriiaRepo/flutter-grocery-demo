@@ -170,14 +170,21 @@ class _ProductsPageState extends State<ProductsPage> {
                   itemBuilder: (_, i) {
                     final p = items[i];
                     final ui = _withAdd(context, p);
-                    return InkWell(
-                      onTap: () => context.pushNamed(
+                    return ProductCard(
+                      product: ui,
+                      onOpen: () => context.pushNamed(
                         'product',
                         pathParameters: {'id': p.id},
                         extra: ui,
                       ),
-                      child: ProductCard(product: ui),
+                      onAdd: () {
+                        ui.onAdd();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Added: ${ui.title}')),
+                        );
+                      },
                     );
+
                   },
                 );
               },
